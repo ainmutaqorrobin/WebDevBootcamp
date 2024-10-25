@@ -17,6 +17,37 @@ app.get("/", (req, res) => {
 });
 
 app.post("/recipe", (req, res) => {
+  console.log(req.body.choice);
+  let data = recipeJSON;
+  data = JSON.parse(data);
+
+  let result;
+  try {
+    if (req.body.choice === "chicken") {
+      result = data.filter((obj) => obj.id === "0001");
+      return res.status(200).json({
+        message: "Successfull",
+        data: result,
+      });
+    }
+    if (req.body.choice === "beef") {
+      result = data.filter((obj) => obj.id === "0002");
+      return res.status(200).json({
+        message: "Successfull",
+        data: result,
+      });
+    }
+    if (req.body.choice === "fish") {
+      result = data.filter((obj) => obj.id === "0003");
+      return res.status(200).json({
+        message: "Successfull",
+        data: result,
+      });
+    }
+  } catch (error) {
+    console.log(error.message);
+    return res.status(404).json({ message: "failed to find recipe." });
+  }
   //Step 3: Write your code here to make this behave like the solution website.
   //Step 4: Add code to views/index.ejs to use the recieved recipe object.
 });
