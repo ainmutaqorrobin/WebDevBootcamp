@@ -16,12 +16,12 @@ const db = new pg.Client({
 db.connect();
 
 let quiz = [
-  { country: "France", capital: "Paris" },
-  { country: "United Kingdom", capital: "London" },
-  { country: "United States of America", capital: "New York" },
+  { flag: "France", name: "Paris" },
+  { flag: "United Kingdom", name: "London" },
+  { flag: "United States of America", name: "New York" },
 ];
 
-db.query("SELECT * FROM capitals", (err, res) => {
+db.query("SELECT * FROM flags", (err, res) => {
   if (err) console.log("Error executing query", err.stack);
   else quiz = res.rows;
   db.end();
@@ -46,7 +46,7 @@ app.get("/", (req, res) => {
 app.post("/submit", (req, res) => {
   let answer = req.body.answer.trim();
   let isCorrect = false;
-  if (currentQuestion.capital.toLowerCase() === answer.toLowerCase()) {
+  if (currentQuestion.name.toLowerCase() === answer.toLowerCase()) {
     totalCorrect++;
     console.log(totalCorrect);
     isCorrect = true;
@@ -63,6 +63,7 @@ app.post("/submit", (req, res) => {
 function nextQuestion() {
   const randomCountry = quiz[Math.floor(Math.random() * quiz.length)];
   currentQuestion = randomCountry;
+  console.log(currentQuestion);
 }
 
 app.listen(port, () => {
