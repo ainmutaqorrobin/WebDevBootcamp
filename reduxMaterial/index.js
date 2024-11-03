@@ -1,7 +1,13 @@
-import { legacy_createStore as createStore } from "redux";
-import { combineReducers } from "redux";
+import {
+  legacy_createStore as createStore,
+  combineReducers,
+  applyMiddleware,
+} from "redux";
+import reduxLogger from "redux-logger";
+
 const BUY_CAKE = "BUY_CAKE";
 const BUY_ICECREAM = "BUY_ICECREAM";
+const logger = reduxLogger.createLogger();
 
 function buyCake() {
   return {
@@ -50,11 +56,9 @@ const rootReducer = combineReducers({
   Freezer: iceCreamReducer,
 });
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(logger));
 console.log("Initial store ", store.getState());
-const unsubscribe = store.subscribe(() =>
-  console.log("Updated store ", store.getState())
-);
+const unsubscribe = store.subscribe(() => {});
 
 store.dispatch(buyCake());
 store.dispatch(buyCake());
