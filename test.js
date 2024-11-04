@@ -1,5 +1,6 @@
-const text = "checking verifed commit";
-const text1 = "checking verifed commit";
-const text2 = "checking verifed commit";
+const arr = [1, 2, 3];
+const number = 2;
 
-console.log(text);
+arr.push(4);
+
+number = 3;
