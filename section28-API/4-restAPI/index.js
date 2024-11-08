@@ -1,6 +1,7 @@
 import express from "express";
 import axios from "axios";
 import bodyParser from "body-parser";
+import "dotenv/config";
 
 const app = express();
 const port = 3000;
@@ -12,7 +13,7 @@ const API_URL = "https://secrets-api.appbrewery.com";
 // https://secrets-api.appbrewery.com/
 
 //TODO 1: Add your own bearer token from the previous lesson.
-const yourBearerToken = "";
+const yourBearerToken = process.env.token;
 const config = {
   headers: { Authorization: `Bearer ${yourBearerToken}` },
 };
@@ -35,10 +36,33 @@ app.post("/get-secret", async (req, res) => {
 
 app.post("/post-secret", async (req, res) => {
   // TODO 2: Use axios to POST the data from req.body to the secrets api servers.
+  const { secret, score } = req.body;
+  try {
+    const result = await axios.post(
+      API_URL + "/secrets",
+      { secret, score },
+      config
+    );
+    res.render("index.ejs", { content: JSON.stringify(result.data) });
+  } catch (error) {
+    res.render("index.ejs", { content: JSON.stringify(error.response.data) });
+  }
 });
 
 app.post("/put-secret", async (req, res) => {
   const searchId = req.body.id;
+  const { secret, score } = req.body;
+
+  try {
+    const result = await axios.put(
+      API_URL + "/secrets/" + searchId,
+      { secret, score },
+      config
+    );
+    res.render("index.ejs", { content: JSON.stringify(result.data) });
+  } catch (error) {
+    res.render("index.ejs", { content: JSON.stringify(error.response.data) });
+  }
   // TODO 3: Use axios to PUT the data from req.body to the secrets api servers.
 });
 
