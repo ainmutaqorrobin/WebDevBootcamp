@@ -27,7 +27,6 @@ app.get("/", async (req, res) => {
 app.post("/get-secret", async (req, res) => {
   let result;
   const { id } = req.body;
-  console.log(id);
 
   try {
     if (!id) result = await axios.get(API_URL + "/user-secrets", config);
@@ -87,11 +86,12 @@ app.post("/patch-secret", async (req, res) => {
 app.post("/delete-secret", async (req, res) => {
   // TODO 5: Use axios to DELETE the item with searchId from the secrets api servers.
   const searchId = req.body.id;
+
   try {
-    const result = await axios.delete(API_URL + "secrets" + searchId, config);
+    const result = await axios.delete(API_URL + "/secrets/" + searchId, config);
     console.log(result);
 
-    res.render("index.js", { content: JSON.stringify(result.data) });
+    res.render("index.js", { content: JSON.stringify(result.data.message) });
   } catch (error) {
     res.render("index.js", { content: JSON.stringify(error.response.data) });
   }
