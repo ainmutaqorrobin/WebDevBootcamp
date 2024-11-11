@@ -11,7 +11,7 @@ export function createUser(
   request: Request<{}, {}, CreateUserDTO, CreateUserQueryParams>,
   response: Response<User>
 ) {
-  response.status(201).send({
+  return response.status(201).send({
     id: 1,
     email: "ainmutaqorrobin@gmail.com",
     username: "ainmutaqorrobin",
