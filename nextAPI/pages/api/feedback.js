@@ -1,9 +1,19 @@
 import fs from "fs";
 import path from "path";
 
+function buildPath() {
+  return path.join(process.cwd(), "data", "feedback.json");
+}
+
+function extractData(filePath) {
+  const fileData = fs.readFileSync(filePath, "utf-8");
+  const data = fileData.length ? JSON.parse(fileData) : [];
+  return data;
+}
+
 export default function handler(request, response) {
+  const filePath = buildPath();
   if (request.method === "POST") {
-    console.log(request.body);
     const { email, feedback } = request.body;
 
     const newFeedback = {
@@ -13,14 +23,14 @@ export default function handler(request, response) {
     };
 
     //store in DB
-    const filePath = path.join(process.cwd(), "data", "feedback.json");
-    const fileData = fs.readFileSync(filePath, "utf-8");
-    const data = fileData.length ? JSON.parse(fileData) : [];
+    const data = extractData(filePath);
     data.push(newFeedback);
     fs.writeFileSync(filePath, JSON.stringify(data));
     return response
       .status(201)
       .json({ message: "Success!", feedback: newFeedback });
+  } else {
+    const data = extractData(filePath);
+    response.status(200).json({ feedback: data });
   }
-  response.status(200).json({ message: "Works!" });
 }
