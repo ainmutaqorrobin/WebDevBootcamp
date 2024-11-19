@@ -1,7 +1,11 @@
 // /api/comments/eventId
+const { MongoClient } = require("mongodb");
 
-export default function handler(request, response) {
+export default async function handler(request, response) {
   const eventId = request.query.eventId;
+
+  const client = await MongoClient.connect(process.env.MONGODB_URL);
+  const db = client.db();
 
   if (request.method === "POST") {
     const { email, name, text } = request.body;
@@ -16,16 +20,25 @@ export default function handler(request, response) {
       return response.status(400).json({ message: "Invalid input requests" });
     }
 
-    const newComment = {
-      id: new Date().toISOString(),
-      email,
-      name,
-      text,
-    };
-    console.log(newComment);
-    return response
-      .status(201)
-      .json({ message: "Comments added.", comment: newComment });
+    try {
+      const newComment = {
+        email,
+        name,
+        text,
+        eventId,
+      };
+
+      const result = await db.collection("comments").insertOne(newComment);
+
+      console.log(result);
+
+      newComment.id = result.insertedId;
+      return response
+        .status(201)
+        .json({ message: "Comments added.", comment: newComment });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   if (request.method === "GET") {
@@ -47,4 +60,5 @@ export default function handler(request, response) {
       comments: dummyData,
     });
   }
+  client.close();
 }
