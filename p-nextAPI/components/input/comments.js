@@ -15,7 +15,6 @@ function Comments(props) {
   }
 
   function addCommentHandler(commentData) {
-    // send data to API
     fetch(`/api/comments/${eventId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -38,7 +37,7 @@ function Comments(props) {
         {showComments ? "Hide" : "Show"} Comments
       </button>
       {showComments && <NewComment onAddComment={addCommentHandler} />}
-      {showComments && <CommentList items={comments}/>}
+      {showComments && <CommentList items={comments} />}
     </section>
   );
 }

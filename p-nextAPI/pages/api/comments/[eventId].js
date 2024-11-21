@@ -30,8 +30,6 @@ export default async function handler(request, response) {
 
       const result = await db.collection("comments").insertOne(newComment);
 
-      console.log(result);
-
       newComment.id = result.insertedId;
       return response
         .status(201)
@@ -42,22 +40,16 @@ export default async function handler(request, response) {
   }
 
   if (request.method === "GET") {
-    const dummyData = [
-      {
-        id: "1",
-        name: "Robin",
-        text: "This event is good",
-      },
-      {
-        id: "2",
-        name: "Jimmy",
-        text: "Not bad",
-      },
-    ];
+    const documents = await db
+      .collection("comments")
+      .find({ eventId })
+      .sort({ _id: -1 })
+      .toArray();
+    console.log(documents);
 
-    return response.status(200).json({
+    response.status(200).json({
       message: "Success",
-      comments: dummyData,
+      comments: documents,
     });
   }
   client.close();
