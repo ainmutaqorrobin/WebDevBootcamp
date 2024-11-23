@@ -20,7 +20,7 @@ export default async function handler(request, response) {
     }
 
     try {
-      await insertDocument(client, { email: email });
+      await insertDocument(client, "emails", { email: email });
       client.close();
       return response.status(201).json({
         message: "Successfull",

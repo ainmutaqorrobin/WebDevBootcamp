@@ -1,23 +1,43 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import classes from "./newsletter-registration.module.css";
+import { NotificationContext } from "../../store/notification-context";
 
 function NewsletterRegistration() {
+  const notifContext = useContext(NotificationContext);
   const emailRef = useRef();
-  function registrationHandler(event) {
+
+  async function registrationHandler(event) {
     event.preventDefault();
     const email = emailRef.current.value;
+    notifContext.showNotification({
+      title: "Signing up...",
+      message: "Registering new user ",
+      status: "pending",
+    });
 
-    fetch("/api/account", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.log(error));
-    // fetch user input (state or refs)
-    // optional: validate input
-    // send valid data to API
+    try {
+      const response = await fetch("/api/account", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        return notifContext.showNotification({
+          title: "Success",
+          message: "New user is registered",
+          status: "success",
+        });
+      } else {
+        throw new Error(data.message || "Something went wrong!");
+      }
+    } catch (error) {
+      notifContext.showNotification({
+        title: "Failed.",
+        message: error.message || "Something went wrong!",
+        status: "error",
+      });
+    }
   }
 
   return (

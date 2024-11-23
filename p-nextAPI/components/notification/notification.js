@@ -1,5 +1,9 @@
+import { useContext } from "react";
 import classes from "./notification.module.css";
+import { NotificationContext } from "../../store/notification-context";
 function Notification(props) {
+  const notifContext = useContext(NotificationContext);
+
   const { title, message, status } = props;
 
   let statusClasses = "";
@@ -19,7 +23,7 @@ function Notification(props) {
   const activeClasses = `${classes.notification} ${statusClasses}`;
 
   return (
-    <div className={activeClasses}>
+    <div className={activeClasses} onClick={notifContext.hideNotification}>
       <h2>{title}</h2>
       <p>{message}</p>
     </div>
