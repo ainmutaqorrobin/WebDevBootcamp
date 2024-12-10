@@ -1,3 +1,4 @@
+import { hashPassword } from "../../../util/auth";
 import { connectDatabase } from "../../../util/db";
 
 export default async function handler(request, response) {
@@ -17,5 +18,12 @@ export default async function handler(request, response) {
   const client = await connectDatabase();
 
   const db = client.db();
-  db.collection("users").insertOne({ email, password });
+
+  const hashedPassword = hashPassword(password);
+
+  const result = await db
+    .collection("users")
+    .insertOne({ email, password: hashedPassword });
+
+  return response.status(201).json({ message: "Created user!" });
 }
