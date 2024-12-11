@@ -21,7 +21,13 @@ export default async function handler(request, response) {
     const client = await connectDatabase();
 
     const db = client.db("next-auth");
-
+    const existedUser = await db.collection("users").findOne({ email: email });
+    if (existedUser) {
+      client.close();
+      return response
+        .status(422)
+        .json({ message: "This email already exist!" });
+    }
     const hashedPassword = await hashPassword(password);
 
     const result = await db
