@@ -6,10 +6,14 @@ export default async function handler(request, response) {
   if (request.method !== "PATCH") {
     return response
       .status(405)
-      .json({ message: "This endpoint only accept PUT request" });
+      .json({ message: "This endpoint only accept PATCH request" });
   }
 
-  const session = await getSession();
+  const session = await getSession({ req: request });
+  console.log("=================================");
+  console.log(session);
+  console.log("=================================");
+
   if (!session) {
     return response.status(401).json({ message: "Unauthorized request" });
   }
