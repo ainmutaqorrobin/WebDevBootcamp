@@ -5,7 +5,7 @@ export default async function handler(request, response) {
   if (request.method === "POST") {
     const data = request.body;
 
-    const { email, password } = data;
+    const { email, password, name } = data;
 
     if (
       !email ||
@@ -32,7 +32,7 @@ export default async function handler(request, response) {
 
     const result = await db
       .collection("users")
-      .insertOne({ email, password: hashedPassword });
+      .insertOne({ name, email, password: hashedPassword });
 
     return response.status(201).json({ message: "Created user!" });
   }

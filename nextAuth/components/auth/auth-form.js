@@ -20,12 +20,16 @@ async function createUser(formData) {
   return data;
 }
 function AuthForm() {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    name: "",
+  });
   const [isLogin, setIsLogin] = useState(true);
   const router = useRouter();
 
   function resetForm() {
-    setFormData({ email: "", password: "" });
+    setFormData({ email: "", password: "", name: "" });
   }
 
   function switchAuthModeHandler() {
@@ -39,7 +43,6 @@ function AuthForm() {
 
   async function onSubmit(e) {
     e.preventDefault();
-    console.log(formData);
 
     if (isLogin) {
       const result = await signIn("credentials", {
@@ -53,7 +56,6 @@ function AuthForm() {
     } else {
       try {
         const result = await createUser(formData);
-        console.log(result);
       } catch (error) {
         console.log(error);
       } finally {
@@ -65,6 +67,18 @@ function AuthForm() {
     <section className={classes.auth}>
       <h1>{isLogin ? "Login" : "Sign Up"}</h1>
       <form onSubmit={onSubmit}>
+        {!isLogin && (
+          <div className={classes.control}>
+            <label htmlFor="name">Your Name</label>
+            <input
+              type="text"
+              id="name"
+              required
+              onChange={handleInput}
+              value={formData.name}
+            />
+          </div>
+        )}
         <div className={classes.control}>
           <label htmlFor="email">Your Email</label>
           <input

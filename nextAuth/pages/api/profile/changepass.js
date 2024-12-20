@@ -1,4 +1,3 @@
-import { getSession } from "next-auth/react";
 import { connectDatabase } from "../../../util/db";
 import { hashPassword, verifyPassword } from "../../../util/auth";
 import { getServerSession } from "next-auth";
@@ -12,9 +11,6 @@ export default async function handler(request, response) {
   }
 
   const session = await getServerSession(request, response, Nextauth);
-  console.log("=================================");
-  console.log(session);
-  console.log("=================================");
 
   if (!session) {
     return response.status(401).json({ message: "Unauthorized request" });
