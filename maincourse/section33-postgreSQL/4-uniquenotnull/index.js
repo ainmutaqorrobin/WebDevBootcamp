@@ -26,8 +26,23 @@ app.get("/", async (req, res) => {
     countries,
     total: countries.length,
   });
+});
 
-  db.end();
+app.post("/add", async (req, res) => {
+  const { country } = req.body;
+  const countryReference = (
+    await db.query("SELECT country_code,country_name FROM countries ")
+  ).rows;
+
+  const enteredCountry = countryReference.find(
+    (obj) => country === obj.country_name
+  );
+
+  await db.query("INSERT INTO visited_countries (country_code) VALUES ($1)", [
+    enteredCountry.country_code,
+  ]);
+
+  res.redirect("/");
 });
 
 app.listen(port, () => {
