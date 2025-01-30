@@ -8,9 +8,9 @@ let now: Date = new Date();
 
 let colors: string[] = ["red", "green"];
 
-class Car {}
+// class Car {}
 
-let car: Car = new Car();
+// let car: Car = new Car();
 
 let point: { x: number; y: number } = {
   x: 10,
