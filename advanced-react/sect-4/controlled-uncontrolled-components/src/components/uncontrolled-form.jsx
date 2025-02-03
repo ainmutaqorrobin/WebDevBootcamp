@@ -1,21 +1,47 @@
-import React from "react";
+import { useState } from "react";
 
-export const UncontrolledForm = () => {
-  const nameInputRef = React.createRef();
-  const ageInputRef = React.createRef();
+function UncontrolledForm() {
+  const [formData, setFormData] = useState({
+    name: "",
+    age: "",
+  });
 
-  const SubmitForm = (e) => {
-    console.log(nameInputRef.current.value);
-    console.log(ageInputRef.current.value);
+  function resetForm() {
+    setFormData({ name: "", age: "" });
+  }
+  function handleInput(e) {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  }
 
+  function submitHandler(e) {
     e.preventDefault();
-  };
+    console.clear();
+    console.log(formData);
+    console.log(!!formData.name);
+
+    resetForm();
+  }
 
   return (
-    <form onSubmit={SubmitForm}>
-      <input name="name" type="text" placeholder="Name" ref={nameInputRef} />
-      <input name="age" type="number" placeholder="Age" ref={ageInputRef} />
+    <form onSubmit={submitHandler}>
+      <input
+        type="text"
+        name="name"
+        placeholder="Name"
+        onChange={handleInput}
+        value={formData.name}
+      />
+      <input
+        type="number"
+        name="age"
+        placeholder="Age"
+        onChange={handleInput}
+        value={formData.age}
+      />
       <input type="submit" value="Submit" />
     </form>
   );
-};
+}
+
+export default UncontrolledForm;
