@@ -1,4 +1,4 @@
-function LargeListItems({ author }) {
+function FullDetailAuthor({ author }) {
   const { name, age, country, books } = author;
 
   return (
@@ -16,4 +16,4 @@ function LargeListItems({ author }) {
   );
 }
 
-export default LargeListItems;
+export default FullDetailAuthor;

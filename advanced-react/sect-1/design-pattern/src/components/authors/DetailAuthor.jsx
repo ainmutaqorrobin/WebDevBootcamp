@@ -1,4 +1,4 @@
-function SmallListItems({ author }) {
+function DetailAuthor({ author }) {
   const { name, age } = author;
   return (
     <p>
@@ -7,4 +7,4 @@ function SmallListItems({ author }) {
   );
 }
 
-export default SmallListItems;
+export default DetailAuthor;

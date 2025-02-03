@@ -1,8 +1,8 @@
 import React from "react";
 import RegularList from "./components/lists/RegularList";
 import { authors } from "./data/authors";
-import SmallListItems from "./components/authors/SmallListItems";
-import LargeListItems from "./components/authors/LargeListItems";
+import DetailAuthor from "./components/authors/DetailAuthor";
+import FullDetailAuthor from "./components/authors/FullDetailAuthor";
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       <RegularList
         items={authors}
         sourceName={"author"}
-        Component={SmallListItems}
+        Component={DetailAuthor}
       />
       <p>
         ========================================================================================
@@ -18,7 +18,7 @@ function App() {
       <RegularList
         items={authors}
         sourceName={"author"}
-        Component={LargeListItems}
+        Component={FullDetailAuthor}
       />
     </>
   );
