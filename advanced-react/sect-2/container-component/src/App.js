@@ -1,8 +1,12 @@
+import CurrentUserLoader from "./components/current-user-loader";
+import UserInfo from "./components/user-info";
 
 function App() {
   return (
     <>
-      <h1>Start Here!</h1>
+      <CurrentUserLoader>
+        <UserInfo />
+      </CurrentUserLoader>
     </>
   );
 }

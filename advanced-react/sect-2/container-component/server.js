@@ -5,10 +5,10 @@ const app = express();
 app.use(express.json());
 
 let currentUser = {
-  name: "Sarah Waters",
-  age: 55,
-  country: "United Kingdom",
-  books: ["Fingersmith", "The Night Watch"],
+  name: "Ain Mutaqorrobin",
+  age: 25,
+  country: "Malaysia",
+  books: ["Fingering", "How to be Sigma sigma bui"],
 };
 
 let users = [
