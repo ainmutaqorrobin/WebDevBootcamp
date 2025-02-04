@@ -1,7 +1,5 @@
 import { useState } from "react";
-import ControlledModal from "./components/controlled.modal";
-import ControlledForm from "./components/controlled-form";
-import UncontrolledFlow from "./components/uncontrolled-flow";
+import ControlledFlow from "./components/controlled-flow";
 
 const StepOne = ({ goNext }) => (
   <>
@@ -12,10 +10,16 @@ const StepOne = ({ goNext }) => (
 const StepTwo = ({ goNext }) => (
   <>
     <h1>Enter you age:</h1>
-    <button onClick={() => goNext({ age: 25 })}>Next</button>
+    <button onClick={() => goNext({ age: 26 })}>Next</button>
   </>
 );
 const StepThree = ({ goNext }) => (
+  <>
+    <h1>Final Page</h1>
+    <button onClick={() => goNext({})}>Next</button>
+  </>
+);
+const StepFour = ({ goNext }) => (
   <>
     <h1>Enter country:</h1>
     <button onClick={() => goNext({ country: "Malaysia" })}>Next</button>
@@ -23,19 +27,28 @@ const StepThree = ({ goNext }) => (
 );
 
 function App() {
-  const [show, setShow] = useState(false);
+  const [data, setData] = useState({});
+  const [page, setPage] = useState(0);
+
+  function goNext(latestData) {
+    setData((prevData) => ({ ...prevData, ...latestData }));
+    setPage(page + 1);
+    console.log(data);
+  }
 
   return (
     <>
-      <UncontrolledFlow
-        onDone={(data) => {
-          console.log(data);
-        }}
+      <ControlledFlow
+        currentPage={page}
+        onNext={goNext}
+        onDone={() => console.log("finished")}
       >
         <StepOne />
         <StepTwo />
-        <StepThree />
-      </UncontrolledFlow>
+        {data.age > 25 && <StepThree />}
+
+        <StepFour />
+      </ControlledFlow>
     </>
   );
 }
