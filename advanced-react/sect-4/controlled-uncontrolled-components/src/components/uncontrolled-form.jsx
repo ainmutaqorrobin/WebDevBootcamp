@@ -1,48 +1,23 @@
-// import { useState } from "react";
+import React from "react";
 
-// // WRONG IMPLEMENTATION, UNCONTROLLED FORM IS USING USEREF NOT USESTATE
-// function UncontrolledForm() {
-//   const [formData, setFormData] = useState({
-//     name: "",
-//     age: "",
-//   });
+function UncontrolledForm() {
+  const nameInputRef = React.createRef();
+  const ageInputRef = React.createRef();
 
-//   function resetForm() {
-//     setFormData({ name: "", age: "" });
-//   }
-//   function handleInput(e) {
-//     const { name, value } = e.target;
-//     setFormData((prevData) => ({ ...prevData, [name]: value }));
-//   }
+  const SubmitForm = (e) => {
+    console.log(nameInputRef.current.value);
+    console.log(ageInputRef.current.value);
 
-//   function submitHandler(e) {
-//     e.preventDefault();
-//     console.clear();
-//     console.log(formData);
-//     console.log(!!formData.name);
+    e.preventDefault();
+  };
 
-//     resetForm();
-//   }
+  return (
+    <form onSubmit={SubmitForm}>
+      <input name="name" type="text" placeholder="Name" ref={nameInputRef} />
+      <input name="age" type="number" placeholder="Age" ref={ageInputRef} />
+      <input type="submit" value="Submit" />
+    </form>
+  );
+}
 
-//   return (
-//     <form onSubmit={submitHandler}>
-//       <input
-//         type="text"
-//         name="name"
-//         placeholder="Name"
-//         onChange={handleInput}
-//         value={formData.name}
-//       />
-//       <input
-//         type="number"
-//         name="age"
-//         placeholder="Age"
-//         onChange={handleInput}
-//         value={formData.age}
-//       />
-//       <input type="submit" value="Submit" />
-//     </form>
-//   );
-// }
-
-// export default UncontrolledForm;
+export default UncontrolledForm;

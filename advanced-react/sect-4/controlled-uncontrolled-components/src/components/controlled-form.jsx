@@ -18,7 +18,6 @@ function ControlledForm() {
     e.preventDefault();
     console.clear();
     console.log(formData);
-    console.log(!!formData.name);
 
     resetForm();
   }
