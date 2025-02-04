@@ -1,9 +1,17 @@
-import UncontrolledForm from "./components/uncontrolled-form";
+import { useState } from "react";
+import ControlledModal from "./components/controlled.modal";
 
 function App() {
+  const [show, setShow] = useState(false);
+
   return (
     <>
-      <UncontrolledForm />
+      <ControlledModal display={show} onClose={() => setShow(false)}>
+        <h3>I am children of modal</h3>
+      </ControlledModal>
+      <button onClick={() => setShow(!show)}>
+        {show ? "Hide Modal" : "Display Modal"}
+      </button>
     </>
   );
 }
