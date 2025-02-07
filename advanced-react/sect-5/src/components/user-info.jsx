@@ -1,4 +1,4 @@
-export const UserInfo = ({ user }) => {
+const UserInfo = ({ user }) => {
   const { name, age, country, books } = user || {};
   return user ? (
     <>
@@ -16,3 +16,5 @@ export const UserInfo = ({ user }) => {
     <h1>Loading...</h1>
   );
 };
+
+export default UserInfo;
