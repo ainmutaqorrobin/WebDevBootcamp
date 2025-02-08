@@ -20,6 +20,8 @@ export const UserInfoForm = updateUser(
             onChange={(e) => onChangeUser({ age: +e.target.value })}
           />
         </label>
+        <button onClick={onResetUser}>Reset</button>
+        <button onClick={onSaveUser}>Save</button>
       </>
     ) : (
       <h3>Loading....</h3>
