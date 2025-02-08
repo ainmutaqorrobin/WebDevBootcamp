@@ -85,6 +85,15 @@ app.get("/books/:id", (req, res) => {
   res.json(books.find((book) => book.id === id));
 });
 
+app.post("/books/:id", (req, res) => {
+  const { id } = req.params;
+  const { book: editedBook } = req.body;
+
+  books = books.map((book) => (book.id === id ? editedBook : book));
+
+  res.json(books.find((book) => book.id === id));
+});
+
 let SERVER_PORT = 9090;
 app.listen(SERVER_PORT, () =>
   console.log(`Server is listening on port: ${SERVER_PORT}`)
