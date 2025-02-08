@@ -1,7 +1,7 @@
 import updateUser from "./update-user";
 
 export const UserInfoForm = updateUser(
-  (user, onChangeUser, onSaveUser, onResetUser) => {
+  ({ user, onChangeUser, onSaveUser, onResetUser }) => {
     const { name, age } = user || {};
     return user ? (
       <>
@@ -29,9 +29,3 @@ export const UserInfoForm = updateUser(
   },
   "3"
 );
-
-function UserForm() {
-  return <div>UserForm</div>;
-}
-
-export default UserForm;
