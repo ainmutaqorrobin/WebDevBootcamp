@@ -1,6 +1,7 @@
+import updateResource from "./update-resource";
 import updateUser from "./update-user";
 
-export const UserInfoForm = updateUser(
+export const UserInfoForm = updateResource(
   ({ user, onChangeUser, onSaveUser, onResetUser }) => {
     const { name, age } = user || {};
     return user ? (
@@ -27,5 +28,6 @@ export const UserInfoForm = updateUser(
       <h3>Loading....</h3>
     );
   },
-  "3"
+  "/users/3",
+  "user"
 );
