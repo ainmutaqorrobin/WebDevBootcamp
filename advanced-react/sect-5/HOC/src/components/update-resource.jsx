@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 function toCapital(str) {
   return str[0].toUpperCase() + str.slice(1);
 }
-
-function updateResource(Component, resourceUrl, resourceName) {
+//Higher Order Components
+export default function updateResource(Component, resourceUrl, resourceName) {
   return (props) => {
     const [initialResource, setinitialResource] = useState(null);
     const [resource, setResource] = useState(null);
@@ -44,5 +44,3 @@ function updateResource(Component, resourceUrl, resourceName) {
     return <Component {...props} {...resourceProps} />;
   };
 }
-
-export default updateResource;
