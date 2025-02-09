@@ -1,7 +1,7 @@
-import { useCurrentUser } from "../hooks/current-user-hook";
-import { useUser } from "../hooks/user-hook";
+import { useResource } from "../hooks/resource-hook";
 
-export const UserInfo = ({ user }) => {
+export const UserInfo = ({ userId }) => {
+  const user = useResource(`/users/${userId}`);
   const { name, age, country, books } = user || {};
   return user ? (
     <>
