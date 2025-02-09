@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-export const useCurrentUser = () => {
+
+export function useCurrentUser() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -11,4 +12,5 @@ export const useCurrentUser = () => {
   }, []);
 
   return user;
-};
+}
+
