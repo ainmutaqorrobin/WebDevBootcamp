@@ -1,7 +1,7 @@
 import { useCurrentUser } from "../hooks/current-user-hook";
+import { useUser } from "../hooks/user-hook";
 
-export const UserInfo = () => {
-  const user = useCurrentUser();
+export const UserInfo = ({ user }) => {
   const { name, age, country, books } = user || {};
   return user ? (
     <>
