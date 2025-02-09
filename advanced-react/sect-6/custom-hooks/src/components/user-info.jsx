@@ -1,8 +1,17 @@
-import { useResource } from "../hooks/resource-hook";
+import axios from "axios";
+import { useDataSource } from "../hooks/data-source-hook";
+import { useCallback } from "react";
+
+const fetchUser = (resourceUrl) => async () => {
+  const response = await axios.get(resourceUrl);
+  return response.data;
+};
 
 export const UserInfo = ({ userId }) => {
-  const user = useResource(`/users/${userId}`);
+  const memoizedFunction = useCallback(fetchUser(`/users/${userId}`), [userId]);
+  const user = useDataSource(memoizedFunction);
   const { name, age, country, books } = user || {};
+
   return user ? (
     <>
       <h2>{name}</h2>
