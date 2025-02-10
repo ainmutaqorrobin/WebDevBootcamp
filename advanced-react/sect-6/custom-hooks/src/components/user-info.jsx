@@ -2,7 +2,7 @@ import axios from "axios";
 import { useDataSource } from "../hooks/data-source-hook";
 import { useCallback } from "react";
 
-const fetchUser = (resourceUrl) => async () => {
+const fetchUser = async (resourceUrl) => {
   const response = await axios.get(resourceUrl);
   return response.data;
 };
@@ -14,9 +14,17 @@ const getFromLocalStorage = (key) => () => {
 };
 
 export const UserInfo = ({ userId }) => {
-  const memoizedLocalStorage = useCallback(getFromLocalStorage("test"), []);
-  const memoizedFunction = useCallback(fetchUser(`/users/${userId}`), [userId]);
+  const memoizedLocalStorage = useCallback(
+    () => getFromLocalStorage("test"),
+    []
+  );
+  const memoizedFunction = useCallback(
+    () => fetchUser(`/users/${userId}`),
+    [userId]
+  );
   const message = useDataSource(memoizedLocalStorage);
+  console.log(message);
+
   const user = useDataSource(memoizedFunction);
   const { name, age, country, books } = user || {};
 
