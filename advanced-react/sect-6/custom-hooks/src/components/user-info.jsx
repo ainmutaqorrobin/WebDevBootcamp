@@ -7,8 +7,16 @@ const fetchUser = (resourceUrl) => async () => {
   return response.data;
 };
 
+const getFromLocalStorage = (key) => () => {
+  console.log("triggered");
+
+  return localStorage.getItem(key);
+};
+
 export const UserInfo = ({ userId }) => {
+  const memoizedLocalStorage = useCallback(getFromLocalStorage("test"), []);
   const memoizedFunction = useCallback(fetchUser(`/users/${userId}`), [userId]);
+  const message = useDataSource(memoizedLocalStorage);
   const user = useDataSource(memoizedFunction);
   const { name, age, country, books } = user || {};
 
