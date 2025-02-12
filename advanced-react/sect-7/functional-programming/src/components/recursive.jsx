@@ -1,24 +1,29 @@
-const isValidObj = (data) => typeof data === "object" && data !== null;
+function isObject(data) {
+  return typeof data === "object" && data !== null;
+}
 
-export const Recursive = ({ data }) => {
-  if (!isValidObj(data)) {
-    return <li>{data}</li>;
+function RecursiveComponent({ data }) {
+  if (!isObject(data)) {
+    return <li> ======== {data}</li>;
   }
 
   const pairs = Object.entries(data);
-  console.log(data);
+  
+  console.log(pairs);
   return (
     <>
       {pairs.map(([key, value]) => {
         return (
-          <li>
+          <li key={key}>
             {key}:
             <ul>
-              <Recursive data={value} />
+              <RecursiveComponent data={value} />
             </ul>
           </li>
         );
       })}
     </>
   );
-};
+}
+
+export default RecursiveComponent;

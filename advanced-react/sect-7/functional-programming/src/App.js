@@ -1,4 +1,4 @@
-import { Recursive } from "./components/recursive";
+import RecursiveComponent, { Recursive } from "./components/recursive";
 
 const myNestedObject = {
   key1: "value1",
@@ -15,7 +15,7 @@ const myNestedObject = {
 function App() {
   return (
     <>
-      <Recursive data={myNestedObject} />
+      <RecursiveComponent data={myNestedObject} />
     </>
   );
 }
