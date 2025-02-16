@@ -4,14 +4,10 @@ import DynamicScroll from "./components/dynamic-scrol";
 
 export default function App() {
   return (
-    <DynamicScroll
-      content={
-        <>
-          <SlowComponent />
-          <BlaBla />
-          <AdditionalComplexThings />
-        </>
-      }
-    />
+    <DynamicScroll>
+      <SlowComponent />
+      <BlaBla />
+      <AdditionalComplexThings />
+    </DynamicScroll>
   );
 }

@@ -26,7 +26,7 @@ const calculateColor = (position: number) => {
   const normalizedPosition = Math.min(Math.max(position, 0), 255);
   return `rgb(${normalizedPosition}, ${255 - normalizedPosition},150)`;
 };
-function DynamicScroll({ content }: { content: ReactNode }) {
+function DynamicScroll({ children }: { children: ReactNode }) {
   const [position, setPosition] = useState(170);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
@@ -41,7 +41,7 @@ function DynamicScroll({ content }: { content: ReactNode }) {
       <DynamicBlock top={position === 113 ? 113 : position} color={blockColor}>
         ⥮
       </DynamicBlock>
-      {content}
+      {children}
     </ScrollableContainer>
   );
 }
