@@ -1,18 +1,27 @@
+import React, { ReactElement } from "react";
 import { Loading } from "./icons";
 
 const Button = ({
-  isLoading,
-}: // iconName,
-// iconLeftColor,
-// iconLeftSize,
-// iconLeftAvatar,
-// iconRight,
-{
-  isLoading: boolean;
+  icon,
+  type,
+  size,
+}: {
+  type?: string;
+  icon: ReactElement;
+  size?: string;
 }) => {
-  return (
-    <button className="button">Submit {isLoading ? <Loading /> : null}</button>
-  );
+  const defaultProps = {
+    size: size === "lg" ? "lg" : "md",
+    color: type === "primary" ? "white" : "black",
+  };
+  const newProps = {
+    ...defaultProps,
+    ...icon?.props,
+  };
+
+  const clonedIcon = React.cloneElement(icon, newProps);
+
+  return <button className="button">Submit {clonedIcon}</button>;
 };
 
 export default Button;
