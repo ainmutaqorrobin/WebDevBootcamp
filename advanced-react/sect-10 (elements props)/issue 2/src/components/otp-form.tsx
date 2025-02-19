@@ -47,15 +47,12 @@ const OTP = () => {
         <Checkbox id="otp-checkbox" onChange={() => setReceived(!received)} />
         <label htmlFor="otp-checkbox">I received the OTP</label>
       </CheckboxWrapper>
-
-      {received ? (
+      {received && (
         <Input id="otp-code" placeholder="Enter the otp code here" />
-      ) : (
-        <Span>Hit the button to receive a new OTP</Span>
       )}
-      <Button received={received}>
-        {received ? "Submit OTP" : "Send me OTP"}
-      </Button>
+      {!received && (
+        <Input id="email-address" placeholder="Enter your email here" />
+      )}
     </>
   );
 };
