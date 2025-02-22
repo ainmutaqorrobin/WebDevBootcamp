@@ -2,7 +2,7 @@ import Card from "./components/card";
 
 function App() {
   return (
-    <Card test="Value">
+    <Card>
       <Card.Header>
         <h1 style={{ margin: "0" }}>Header</h1>
       </Card.Header>
