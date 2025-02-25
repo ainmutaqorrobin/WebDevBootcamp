@@ -10,8 +10,16 @@ const ToggleButton = styled.button`
   cursor: pointer;
 `;
 
-const Button = () => {
-  return <ToggleButton>⮜</ToggleButton>;
+const Button = ({
+  collapsed,
+  setCollapsed,
+}: {
+  collapsed: boolean;
+  setCollapsed: () => void;
+}) => {
+  return (
+    <ToggleButton onClick={setCollapsed}>{collapsed ? ">" : "<"}</ToggleButton>
+  );
 };
 
 export default Button;

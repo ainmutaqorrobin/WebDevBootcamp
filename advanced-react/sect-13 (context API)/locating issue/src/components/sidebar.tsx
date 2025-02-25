@@ -12,10 +12,16 @@ const SidebarDiv = styled.div<{ collapsed?: boolean }>`
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 `;
 
-const Sidebar = () => {
+const Sidebar = ({
+  collapsed,
+  setCollapsed,
+}: {
+  collapsed: boolean;
+  setCollapsed: () => void;
+}) => {
   return (
-    <SidebarDiv>
-      <Button />
+    <SidebarDiv collapsed={collapsed}>
+      <Button collapsed={collapsed} setCollapsed={setCollapsed} />
       <div>Sidebar Content</div>
     </SidebarDiv>
   );

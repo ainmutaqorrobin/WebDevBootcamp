@@ -8,10 +8,10 @@ const BottomBlock = styled.div<{ collapsed?: boolean }>`
   margin-top: 20px;
   text-align: center;
 `;
-const Blocks = () => {
+const Blocks = ({ collapsed }: { collapsed: boolean }) => {
   return (
     <>
-      <BottomBlock>
+      <BottomBlock collapsed={collapsed}>
         <div>one</div>
         <div>two</div>
         <div>three</div>
