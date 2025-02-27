@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Sidebar from "./components/sidebar";
 import Main from "./components/main";
 import { useState } from "react";
+import NavController from "./context/nav-controller";
 
 const Container = styled.div`
   display: flex;
@@ -9,14 +10,12 @@ const Container = styled.div`
 `;
 
 export default function App() {
-  const [collapsed, setCollapsed] = useState(false);
   return (
-    <Container>
-      <Sidebar
-        collapsed={collapsed}
-        setCollapsed={() => setCollapsed(!collapsed)}
-      />
-      <Main collapsed={collapsed} />
-    </Container>
+    <NavController>
+      <Container>
+        <Sidebar />
+        <Main />
+      </Container>
+    </NavController>
   );
 }

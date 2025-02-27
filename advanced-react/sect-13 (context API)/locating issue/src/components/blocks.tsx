@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useNav } from "../context/nav-controller";
 
 const BottomBlock = styled.div<{ collapsed?: boolean }>`
   display: grid;
@@ -8,7 +9,8 @@ const BottomBlock = styled.div<{ collapsed?: boolean }>`
   margin-top: 20px;
   text-align: center;
 `;
-const Blocks = ({ collapsed }: { collapsed: boolean }) => {
+const Blocks = () => {
+  const { collapsed } = useNav();
   return (
     <>
       <BottomBlock collapsed={collapsed}>

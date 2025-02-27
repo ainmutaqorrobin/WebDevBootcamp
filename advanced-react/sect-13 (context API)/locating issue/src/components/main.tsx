@@ -9,14 +9,14 @@ const MainDiv = styled.div`
   transition: margin-left 0.3s;
 `;
 
-const Main = ({ collapsed }: { collapsed: boolean }) => {
+const Main = () => {
   return (
     <MainDiv>
       <h1>Main Content</h1>
       <p>This is the main content area.</p>
       <SlowComponent />
       <AnotherSlowComponent />
-      <Blocks collapsed={collapsed} />
+      <Blocks />
     </MainDiv>
   );
 };

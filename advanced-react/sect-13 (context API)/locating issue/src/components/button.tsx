@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useNav } from "../context/nav-controller";
 
 const ToggleButton = styled.button`
   margin-bottom: 20px;
@@ -10,16 +11,9 @@ const ToggleButton = styled.button`
   cursor: pointer;
 `;
 
-const Button = ({
-  collapsed,
-  setCollapsed,
-}: {
-  collapsed: boolean;
-  setCollapsed: () => void;
-}) => {
-  return (
-    <ToggleButton onClick={setCollapsed}>{collapsed ? ">" : "<"}</ToggleButton>
-  );
+const Button = () => {
+  const { collapsed, toggle } = useNav();
+  return <ToggleButton onClick={toggle}>{collapsed ? ">" : "<"}</ToggleButton>;
 };
 
 export default Button;
