@@ -11,6 +11,8 @@ const BottomBlock = styled.div<{ collapsed?: boolean }>`
 `;
 const Blocks = () => {
   const { collapsed } = useNav();
+  console.log("blocks renderes");
+
   return (
     <>
       <BottomBlock collapsed={collapsed}>
