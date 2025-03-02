@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Button from "./button";
-import { useNav } from "../context/nav-controller";
+import { useNavData } from "../context/nav-controller";
+import { Button } from "./button";
 
 const SidebarDiv = styled.div<{ collapsed?: boolean }>`
   width: ${(props) => (props.collapsed ? "60px" : "200px")};
@@ -14,7 +14,7 @@ const SidebarDiv = styled.div<{ collapsed?: boolean }>`
 `;
 
 const Sidebar = () => {
-  const { collapsed } = useNav();
+  const { collapsed } = useNavData();
   return (
     <SidebarDiv collapsed={collapsed}>
       <Button />

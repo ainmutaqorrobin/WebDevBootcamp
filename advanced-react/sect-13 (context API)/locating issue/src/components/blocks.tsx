@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useNav } from "../context/nav-controller";
+import { useNavData } from "../context/nav-controller";
 
 const BottomBlock = styled.div<{ collapsed?: boolean }>`
   display: grid;
@@ -10,8 +10,7 @@ const BottomBlock = styled.div<{ collapsed?: boolean }>`
   text-align: center;
 `;
 const Blocks = () => {
-  const { collapsed } = useNav();
-  console.log("blocks renderes");
+  const { collapsed } = useNavData();
 
   return (
     <>

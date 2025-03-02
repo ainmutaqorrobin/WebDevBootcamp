@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Blocks from "./blocks";
 import { AnotherSlowComponent, SlowComponent } from "./slow-component";
+import { CloseButton } from "./button";
 
 const MainDiv = styled.div`
   flex-grow: 1;
@@ -17,6 +18,7 @@ const Main = () => {
       <SlowComponent />
       <AnotherSlowComponent />
       <Blocks />
+      <CloseButton />
     </MainDiv>
   );
 };
