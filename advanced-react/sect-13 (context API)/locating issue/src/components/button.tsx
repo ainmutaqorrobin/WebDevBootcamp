@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { useNavApi, useNavData } from "../context/nav-controller";
+import { useNavApi } from "../context/nav-controller";
+import withNavClose from "./hoc";
 
 const ToggleButton = styled.button`
   margin-bottom: 20px;
@@ -12,14 +13,13 @@ const ToggleButton = styled.button`
 `;
 
 export const Button = () => {
-  const { toggle } = useNavApi();
-  const { collapsed } = useNavData();
+  const { collapsed, toggle } = useNavApi();
 
   return <ToggleButton onClick={toggle}>{collapsed ? ">" : "<"}</ToggleButton>;
 };
-export const CloseButton = () => {
-  const { close } = useNavApi();
-  console.log("close button");
-
-  return <ToggleButton onClick={close}>Close sidebar</ToggleButton>;
-};
+export const CloseButton = withNavClose(
+  ({ closeNav }: { closeNav: () => void }) => {
+    console.log("close button rendered");
+    return <ToggleButton onClick={closeNav}>Close Nav</ToggleButton>;
+  }
+);
