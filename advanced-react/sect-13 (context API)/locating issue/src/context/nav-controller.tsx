@@ -1,4 +1,20 @@
-import React, { useCallback, useContext, useMemo, useState } from "react";
+import React, { useContext, useMemo, useReducer } from "react";
+
+type State = { collapsed: boolean };
+const defaultState: State = { collapsed: false };
+
+type Action = { type: "open" | "close" | "toggle" };
+
+const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case "open":
+      return { ...state, collapsed: true };
+    case "close":
+      return { ...state, collapsed: false };
+    case "toggle":
+      return { ...state, collapsed: !state.collapsed };
+  }
+};
 
 const ContextData = React.createContext({
   collapsed: false,
@@ -7,28 +23,25 @@ const ContextData = React.createContext({
 const ContextApi = React.createContext({
   open: () => {},
   close: () => {},
+  toggle: () => {},
 });
 export const useNavData = () => useContext(ContextData);
 export const useNavApi = () => useContext(ContextApi);
 
 function NavController({ children }: { children: React.ReactNode }) {
-  const [collapsed, setCollapsed] = useState(false);
-
-  const open = useCallback(() => {
-    setCollapsed(false);
-  }, []);
-
-  const close = useCallback(() => {
-    setCollapsed(true);
-  }, []);
+  const [state, dispatch] = useReducer(reducer, defaultState);
 
   const data = useMemo(() => {
-    return { collapsed };
-  }, [collapsed]);
+    return { collapsed: state.collapsed };
+  }, [state]);
 
   const api = useMemo(() => {
-    return { open, close };
-  }, [open, close]);
+    return {
+      open: () => dispatch({ type: "open" }),
+      close: () => dispatch({ type: "close" }),
+      toggle: () => dispatch({ type: "toggle" }),
+    };
+  }, []);
 
   return (
     <ContextData.Provider value={data}>
