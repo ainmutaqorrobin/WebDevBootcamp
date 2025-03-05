@@ -1,4 +1,5 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
+import Input from "./input";
 
 const Form = () => {
   const [username, setUsername] = useState("");
@@ -26,7 +27,7 @@ const Form = () => {
 
   return (
     <>
-      <input type="text" name="username" ref={ref} onChange={changeHandler} />
+      <Input changeHandler={setUsername} ref={ref} />
       <input type="password" name="password" onChange={changeHandler} />
       <button onClick={submit}>submit</button>
     </>
