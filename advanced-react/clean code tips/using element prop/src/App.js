@@ -14,6 +14,9 @@ function App() {
       <Button size="m">Medium</Button>
       <Button size="l">Large</Button>
       <Button size="xl">xLarge</Button>
+      <Button As="a" size="l" href="/">
+        Link
+      </Button>
     </div>
   );
 }
