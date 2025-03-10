@@ -1,9 +1,7 @@
-import { useCartContext } from "../App";
+import { useValueContext } from "./cart-context";
 
 const Display = () => {
-  const {
-    state: { count },
-  } = useCartContext();
+  const { count } = useValueContext();
   return <span className="span">{count}</span>;
 };
 
