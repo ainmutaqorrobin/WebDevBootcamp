@@ -1,9 +1,7 @@
 import axios from "axios";
-
 const axiosParams = {
-  // Base URL should be set via environment
   baseURL:
-    process.env.NODE_ENV === "development" ? "http://localhost:8080" : "/",
+    process.env.NODE_ENV === "development" ? "http://localhost:3000" : "/",
 };
 
 const axiosInstance = axios.create(axiosParams);
@@ -17,4 +15,5 @@ const api = (axios) => {
     put: (url, body, config = {}) => axios.put(url, body, config),
   };
 };
+
 export default api(axiosInstance);

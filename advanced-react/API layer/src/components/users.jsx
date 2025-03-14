@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { fetchUser } from "../api/userApi";
 import styled from "styled-components";
+import { fetchUsers } from "../api/userApi";
 
 const useFetchUsers = () => {
   const [users, setUsers] = useState([]);
   const initFetchUsers = async () => {
-    const response = await fetchUser();
+    const response = await fetchUsers();
     setUsers(response.data);
   };
   return {
