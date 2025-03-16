@@ -6,13 +6,50 @@ const axiosParams = {
 
 const axiosInstance = axios.create(axiosParams);
 
+export const didAbort = (error) => axios.isCancel(error) && { aborted: true };
+
+const getCancelSource = () => axios.CancelToken.source();
+
+export const isApiError = (error) => axios.isAxiosError(error);
+
+const withAbort = (fn) => {
+  const executor = async (...args) => {
+    const originalConfig = args[args.length - 1];
+    const { abort, ...config } = originalConfig;
+
+    if (typeof abort === "function") {
+      const { cancel, token } = getCancelSource();
+      config.CancelToken = token;
+      abort(cancel);
+    }
+
+    try {
+      if (args.length > 2) {
+        const [url, body] = args;
+        return await fn(url, body, config);
+      } else {
+        const [url] = args;
+        return await fn(url, config);
+      }
+    } catch (error) {
+      if (didAbort(error)) {
+        error.aborted = true;
+      }
+      throw error;
+    }
+  };
+
+  return executor;
+};
+
 const api = (axios) => {
   return {
-    get: (url, config = {}) => axios.get(url, config),
-    delete: (url, config = {}) => axios.delete(url, config),
-    post: (url, body, config = {}) => axios.post(url, body, config),
-    patch: (url, body, config = {}) => axios.patch(url, body, config),
-    put: (url, body, config = {}) => axios.put(url, body, config),
+    get: (url, config = {}) => withAbort(axios.get)(url, config),
+    delete: (url, config = {}) => withAbort(axios.delete)(url, config),
+    post: (url, body, config = {}) => withAbort(axios.post)(url, body, config),
+    patch: (url, body, config = {}) =>
+      withAbort(axios.patch)(url, body, config),
+    put: (url, body, config = {}) => withAbort(axios.put)(url, body, config),
   };
 };
 
