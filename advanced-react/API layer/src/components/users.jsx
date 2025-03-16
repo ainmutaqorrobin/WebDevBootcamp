@@ -1,32 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { fetchUsers } from "../api/userApi";
-import { withAsync } from "../helpers/with-async";
-import { apiStatus } from "../const/api-status";
-import { useApiStatus } from "../api/hooks/useApiStatus";
+
 import LazyLoader from "./lazy-loader";
+import { useApi } from "../api/hooks/useApi";
 
 const useFetchUsers = () => {
-  const [users, setUsers] = useState([]);
   const {
+    data: users,
+    exec: initFetchUsers,
     status: fetchUsersStatus,
-    setStatus: setFetchUsersStatus,
     isIdle: isFetchUsersStatusIdle,
     isPending: isFetchUsersStatusPending,
     isError: isFetchUsersStatusError,
     isSuccess: isFetchUsersStatusSuccess,
-  } = useApiStatus(apiStatus.IDLE);
-
-  const initFetchUsers = async () => {
-    setFetchUsersStatus(apiStatus.PENDING);
-    const { response, error } = await withAsync(() => fetchUsers());
-
-    if (error) setFetchUsersStatus(apiStatus.ERROR);
-    else if (response) {
-      setFetchUsersStatus(apiStatus.SUCCESS);
-      setUsers(response);
-    }
-  };
+  } = useApi(() => fetchUsers().then((response) => response.data));
 
   return {
     users,
