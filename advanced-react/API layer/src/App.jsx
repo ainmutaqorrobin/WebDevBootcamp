@@ -4,6 +4,7 @@ import TopQuotes from "./components/top-quotes";
 import Users from "./components/users";
 import UpdateQuotes from "./components/update-quote";
 import PaginatedQuotes from "./components/paginated-quotes";
+import InfiniteScrollQuotes from "./components/infinite-scroll-quotes";
 
 const queryClient = new QueryClient();
 function App() {
@@ -11,7 +12,7 @@ function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <UpdateQuotes />
-        <PaginatedQuotes />
+        <InfiniteScrollQuotes />
       </QueryClientProvider>
     </>
   );
