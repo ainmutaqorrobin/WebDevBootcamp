@@ -5,14 +5,16 @@ import Users from "./components/users";
 import UpdateQuotes from "./components/update-quote";
 import PaginatedQuotes from "./components/paginated-quotes";
 import InfiniteScrollQuotes from "./components/infinite-scroll-quotes";
+import { ToastContainer } from "react-toastify";
+import QueryCancellationWithAbortSignal from "./components/query-cancellation";
 
 const queryClient = new QueryClient();
 function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <UpdateQuotes />
-        <InfiniteScrollQuotes />
+        <ToastContainer />
+        <QueryCancellationWithAbortSignal />
       </QueryClientProvider>
     </>
   );

@@ -69,7 +69,7 @@ function InfiniteScrollQuotes() {
   );
 
   useEffect(() => {
-    if (inView && isFetchingNextPage && hasNextPage) {
+    if (inView && !isFetchingNextPage && hasNextPage) {
       fetchNextPage();
     }
   }, [inView]);
