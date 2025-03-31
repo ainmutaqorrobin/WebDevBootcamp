@@ -22,7 +22,7 @@ export const fetchBook = async (count: number) => {
 };
 
 function App() {
-  const [book, setBook] = useState();
+  const [book, setBook] = useState<Book | undefined>();
 
   useEffect(() => {
     fetchRandomBook().then(setBook);
