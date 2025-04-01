@@ -1,24 +1,19 @@
-import { ChangeEventHandler, FormEventHandler, PropsWithChildren } from "react";
+import { PropsWithChildren, useState } from "react";
 import "./books.css";
 
 interface iProps {
-  count: number;
-  onSubmit: FormEventHandler<HTMLElement>;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  onSubmit: (value: number) => void;
 }
 
-export const Books = ({
-  children,
-  count,
-  onSubmit,
-  onChange,
-}: PropsWithChildren<iProps>) => {
+export const Books = ({ children, onSubmit }: PropsWithChildren<iProps>) => {
+  const [count, setCount] = useState(0);
+
   return (
     <section className="book-list gap-8">
       <form
         onSubmit={(e: any) => {
           e.preventDefault();
-          onSubmit(e);
+          onSubmit(count);
         }}
       >
         <label htmlFor="number-of-books-to-load" className="book-form-label">
@@ -32,7 +27,7 @@ export const Books = ({
             min="0"
             max="20"
             value={count}
-            onChange={onChange}
+            onChange={(e) => setCount(e.target.valueAsNumber)}
           />
           <button type="submit" className="book-button">
             Load Books

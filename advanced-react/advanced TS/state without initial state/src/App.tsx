@@ -23,17 +23,12 @@ export const fetchBook = async (count: number) => {
 
 function App() {
   const [books, setBooks] = useState<Book[]>([]);
-  const [count, setCount] = useState(0);
-
+  console.log("app rendered");
   if (!books) return <Loader />;
 
   return (
     <main className="w-full max-w-2xl py-16 mx-auto">
-      <Books
-        count={count}
-        onChange={(e) => setCount(e.target.valueAsNumber)}
-        onSubmit={(e) => fetchBook(count).then(setBooks)}
-      >
+      <Books onSubmit={(value) => fetchBook(value).then(setBooks)}>
         {books.map((book) => {
           return <Book title={book.title} author={book.author} />;
         })}
