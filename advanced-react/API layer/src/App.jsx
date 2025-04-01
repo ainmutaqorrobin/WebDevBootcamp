@@ -14,7 +14,8 @@ function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <ToastContainer />
-        <QueryCancellationWithAbortSignal />
+        <UpdateQuotes />
+        <TopQuotes />
       </QueryClientProvider>
     </>
   );
