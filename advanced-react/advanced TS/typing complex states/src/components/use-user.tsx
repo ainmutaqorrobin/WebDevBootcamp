@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 
-type Status = "fetching" | "fetched" | "error";
+type Status =
+  | { status: "fetching" | "fetched" }
+  | { status: "error"; error: Error };
 
 export const useUser = (src: string) => {
-  const [state, setState] = useState<Status>("fetching");
+  const [state, setState] = useState<Status>({ status: "fetching" });
 
   useEffect(() => {
-    setState("fetching");
+    setState({ status: "fetching" });
 
     let aborted = false;
 
@@ -18,13 +20,13 @@ export const useUser = (src: string) => {
 
         //do something with the data
 
-        setState("fetched");
+        setState({ status: "fetched" });
       })
       .catch((error) => {
         if (aborted) {
           return;
         }
-        setState("error");
+        setState({ status: "error", error });
       });
 
     return () => {

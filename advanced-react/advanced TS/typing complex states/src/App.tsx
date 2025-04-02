@@ -6,15 +6,15 @@ function App() {
   // if (state === "non-existing-state") {
   // }
 
-  if (state === "fetching") {
+  if (state.status === "fetching") {
     return "fetching...";
   }
 
-  if (state === "fetched") {
+  if (state.status === "fetched") {
     return "fetched";
   }
 
-  if (state === "error") {
+  if (state.status === "error") {
     return "Error";
   }
   return <></>;
