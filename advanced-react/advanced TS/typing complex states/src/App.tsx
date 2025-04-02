@@ -3,8 +3,8 @@ import { useUser } from "./components/use-user";
 function App() {
   const state = useUser("/user");
 
-  if (state === "non-existing-state") {
-  }
+  // if (state === "non-existing-state") {
+  // }
 
   if (state === "fetching") {
     return "fetching...";

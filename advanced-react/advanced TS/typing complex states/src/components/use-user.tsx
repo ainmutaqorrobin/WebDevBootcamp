@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 
+type Status = "fetching" | "fetched" | "error";
+
 export const useUser = (src: string) => {
-  const [state, setState] = useState("fetching");
+  const [state, setState] = useState<Status>("fetching");
 
   useEffect(() => {
     setState("fetching");
