@@ -1,23 +1,18 @@
 import { useUser } from "./components/use-user";
+import { useUser2 } from "./components/use-user2";
 
 function App() {
-  const state = useUser("/user");
+  const [status, value] = useUser2<{ name: string }>("/user");
 
-  // if (state === "non-existing-state") {
-  // }
-
-  if (state.status === "fetching") {
-    return "fetching...";
+  if (status === "fetching") {
+    return <div>Fetching...</div>;
   }
 
-  if (state.status === "fetched") {
-    return "fetched";
+  if (status === "error") {
+    return <div>Error: {value.message}</div>;
   }
 
-  if (state.status === "error") {
-    return "Error";
-  }
-  return <></>;
+  return <div>{value.name}</div>;
 }
 
 export default App;
