@@ -1,4 +1,4 @@
-import { useState, useReducer } from "react";
+import { useReducer } from "react";
 import "./style.css";
 
 type InitialState = {
@@ -11,7 +11,19 @@ const initialState: InitialState = {
   inputItems: 0,
 };
 
-const cartReducer = (state = initialState, action: any) => {
+type Action = {
+  type: "increase" | "decrease" | "reset" | "updateItemsFromInput";
+};
+
+type ActionWithPayload = {
+  type: "updateInputItems";
+  payload: number;
+};
+
+const cartReducer = (
+  state = initialState,
+  action: Action | ActionWithPayload
+) => {
   const { items, inputItems } = state;
 
   switch (action.type) {
@@ -24,7 +36,7 @@ const cartReducer = (state = initialState, action: any) => {
       return { items: newItemsDec, inputItems: newItemsDec };
 
     case "reset":
-      return { items: 0, inputItems: 0 };
+      return initialState;
 
     case "updateInputItems":
       return { items, inputItems: action.payload };
@@ -79,8 +91,8 @@ const ShoppingCard = () => {
             value={inputItems}
             onChange={(e) =>
               dispatch({
-                types: "updateInputItems",
-                payload: e.target.value,
+                type: "updateInputItems",
+                payload: e.target.valueAsNumber,
               })
             }
             className="counter-input"
