@@ -1,7 +1,8 @@
-import { useState } from "react"; // Importing useState from React
+import { Dispatch, useState } from "react"; // Importing useState from React
 import id from "lodash.uniqueid"; // Importing the lodash.uniqueid function to generate unique IDs
 import AddSavedColor from "./add-saved-color"; // Importing the AddSavedColor component
 import SavedColor from "./saved-color"; // Importing the SavedColor component
+import { ColorReducerAction } from "../../reducer/color-reducer";
 
 // Inline CSS styles for the container element
 const containerStyle: React.CSSProperties = {
@@ -13,6 +14,7 @@ const containerStyle: React.CSSProperties = {
 
 type SavedColorsProps = {
   hexColor: string;
+  dispatch: Dispatch<ColorReducerAction>;
 };
 
 // Initial saved colors data
@@ -21,7 +23,7 @@ const saved_colors = [
   { id: id(), name: "Royal Blue", hexColor: "#4169E1" },
 ];
 
-const SavedColors = ({ hexColor }: SavedColorsProps) => {
+const SavedColors = ({ hexColor, dispatch }: SavedColorsProps) => {
   const [savedColors, setSavedColors] = useState(saved_colors);
 
   return (
@@ -46,6 +48,7 @@ const SavedColors = ({ hexColor }: SavedColorsProps) => {
                 colors.filter((color) => color.id !== id)
               )
             }
+            dispatch={dispatch}
           />
         );
       })}

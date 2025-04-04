@@ -1,6 +1,7 @@
-import { MouseEventHandler } from "react"; // Importing MouseEventHandler from React
+import { Dispatch, MouseEventHandler } from "react"; // Importing MouseEventHandler from React
 import Button from "../common/button"; // Importing the Button component
 import ColorChangeSwatch from "../common/color-change-swatch"; // Importing the ColorChangeSwatch component
+import { ColorReducerAction } from "../../reducer/color-reducer";
 
 // Inline CSS styles for the container element
 const containerStyle = {
@@ -16,9 +17,16 @@ type SavedColorProps = {
   hexColor: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   onRemove?: () => void;
+  dispatch: Dispatch<ColorReducerAction>;
 };
 
-const SavedColor = ({ name, hexColor, onClick, onRemove }: SavedColorProps) => {
+const SavedColor = ({
+  name,
+  hexColor,
+  onClick,
+  onRemove,
+  dispatch,
+}: SavedColorProps) => {
   return (
     <article style={containerStyle}>
       {/* Button component to delete the saved color */}
@@ -29,7 +37,7 @@ const SavedColor = ({ name, hexColor, onClick, onRemove }: SavedColorProps) => {
       <ColorChangeSwatch
         hexColor={hexColor}
         colorName={name}
-        onClick={onClick}
+        onClick={() => dispatch({ type: "update-hex", payload: { hexColor } })}
       />
     </article>
   );

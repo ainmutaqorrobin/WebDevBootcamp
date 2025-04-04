@@ -1,4 +1,6 @@
+import { Dispatch } from "react";
 import ColorChangeSwatch from "../common/color-change-swatch";
+import { ColorReducerAction } from "../../reducer/color-reducer";
 
 // CSS styles for the container
 const containerStyle: React.CSSProperties = {
@@ -11,12 +13,14 @@ const containerStyle: React.CSSProperties = {
 type RelatedColorPaletteProps = {
   title: string; // The title of the color palette
   hexColors: string[]; // Array of hexadecimal colors for the color palette
+  dispatch: Dispatch<ColorReducerAction>;
 };
 
 // The RelatedColorPalette component takes a title and an array of hexadecimal colors as input
 const RelatedColorPalette = ({
   title,
   hexColors,
+  dispatch,
 }: RelatedColorPaletteProps) => {
   return (
     <section>
@@ -27,7 +31,18 @@ const RelatedColorPalette = ({
       <div style={containerStyle}>
         {hexColors.map((hexColor) => {
           // Rendering each color swatch using the ColorChangeSwatch component
-          return <ColorChangeSwatch key={hexColor} hexColor={hexColor} />;
+          return (
+            <ColorChangeSwatch
+              key={hexColor}
+              hexColor={hexColor}
+              onClick={() =>
+                dispatch({
+                  type: "update-hex",
+                  payload: { hexColor },
+                })
+              }
+            />
+          );
         })}
       </div>
     </section>

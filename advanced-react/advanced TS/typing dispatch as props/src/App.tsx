@@ -20,8 +20,8 @@ function App() {
         }
       />
       <SetColors dispatch={dispatch} hexColor={hexColor} />
-      <ColorGroups hexColor={hexColor} />
-      <SavedColors hexColor={hexColor} />
+      <ColorGroups dispatch={dispatch} hexColor={hexColor} />
+      <SavedColors dispatch={dispatch} hexColor={hexColor} />
     </div>
   );
 }
