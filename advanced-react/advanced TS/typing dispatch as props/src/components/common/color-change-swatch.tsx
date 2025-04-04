@@ -1,20 +1,21 @@
 import clsx from "clsx"; // Importing clsx library for combining class names
-import { MouseEventHandler } from "react"; // Importing MouseEventHandler from React
+import { useContext } from "react"; // Importing MouseEventHandler from React
 import Button from "./button"; // Importing the Button component
+import { ColorContext } from "../../context/context";
 
 type ColorChangeSwatchProps = {
   hexColor: string;
   colorName?: string;
   className?: string;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
 const ColorChangeSwatch = ({
   hexColor,
   colorName,
   className,
-  onClick,
 }: ColorChangeSwatchProps) => {
+  const { dispatch } = useContext(ColorContext);
+
   return (
     <Button
       className={clsx("color-input", className)} // Concatenate class names using clsx
@@ -25,7 +26,7 @@ const ColorChangeSwatch = ({
         height: "100%",
         maxHeight: "43px",
       }}
-      onClick={onClick} // Pass the onClick event handler to the Button component
+      onClick={() => dispatch({ type: "update-hex", payload: { hexColor } })} // Pass the onClick event handler to the Button component
     >
       {/* Display the colorName and hexColor */}
       {colorName}

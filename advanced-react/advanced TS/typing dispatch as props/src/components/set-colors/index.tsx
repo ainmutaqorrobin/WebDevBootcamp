@@ -1,5 +1,3 @@
-import { Dispatch } from "react";
-import { ColorReducerAction } from "../../reducer/color-reducer";
 import ColorName from "./color-name"; // Importing the ColorName component
 import HexToCMYK from "./to-cmyk"; // Importing the HexToCMYK component
 import HexToHSL from "./to-hsl"; // Importing the HexToHSL component
@@ -15,16 +13,15 @@ const containerStyle: React.CSSProperties = {
 
 type SetColorsProps = {
   hexColor: string;
-  dispatch: Dispatch<ColorReducerAction>;
 };
 
-const SetColors = ({ hexColor, dispatch }: SetColorsProps) => {
+const SetColors = ({ hexColor }: SetColorsProps) => {
   return (
     <div style={containerStyle}>
       {/* Display the title */}
       <h3>Set Colors</h3>
       {/* Display the HexToRGB component */}
-      <HexToRGB hexColor={hexColor} dispatch={dispatch} />
+      <HexToRGB hexColor={hexColor} />
       {/* Display the HexToHSL component */}
       <HexToHSL hexColor={hexColor} />
       {/* Display the HexToHSV component */}
