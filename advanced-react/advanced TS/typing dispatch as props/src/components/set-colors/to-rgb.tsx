@@ -1,7 +1,6 @@
 import { hex } from "color-convert"; // Importing the color-convert library
 import LabeledInput from "../common/labeled-input"; // Importing the LabeledInput component
-import { useContext } from "react";
-import { ColorContext } from "../../context/context";
+import { useContext } from "../../context/context";
 
 const containerStyle: React.CSSProperties = {
   display: "grid",
@@ -15,7 +14,7 @@ type HexToRGBProps = {
 };
 
 const HexToRGB = ({ hexColor }: HexToRGBProps) => {
-  const { dispatch } = useContext(ColorContext);
+  const { dispatch } = useContext();
   // Convert the hexColor to RGB format using color-convert library
   const color = hex.rgb(hexColor);
   const [r, g, b] = color;

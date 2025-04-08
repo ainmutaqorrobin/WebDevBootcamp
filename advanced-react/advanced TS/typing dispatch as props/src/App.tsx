@@ -1,13 +1,12 @@
-import { useContext } from "react";
 import ColorSelect from "./components/color-selector";
 import SetColors from "./components/set-colors";
 import ColorGroups from "./components/color-group";
 import SavedColors from "./components/saved-colors";
 import "./App.css";
-import { ColorContext } from "./context/context";
+import { useContext } from "./context/context";
 
 function App() {
-  const { hexColor, dispatch } = useContext(ColorContext);
+  const { hexColor, dispatch } = useContext();
 
   return (
     <div className="grid">
