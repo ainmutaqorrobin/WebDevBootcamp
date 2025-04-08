@@ -1,8 +1,10 @@
 type Menu = "home" | "products" | "about";
 type ButtonVariant = "primary" | "secondary";
 
-type FlexibleMenu = Menu | (string & {});
-type FlexibleButtonVariant = ButtonVariant | (string & {});
+type FlexibleMenu = FlexibleAutoComplete<Menu>;
+type FlexibleButtonVariant = FlexibleAutoComplete<ButtonVariant>;
+
+type FlexibleAutoComplete<T> = T | (string & {});
 
 export const menus: FlexibleMenu[] = ["home", "products", "about", "other..."];
 
