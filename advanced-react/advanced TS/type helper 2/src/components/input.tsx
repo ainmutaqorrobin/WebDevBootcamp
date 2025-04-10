@@ -1,8 +1,10 @@
 import { ChangeEventHandler } from "react";
 
-type RequiredProps<T> = T | OptionalProps<T>;
+type RequiredProps<T extends Record<string, any>> = T | OptionalProps<T>;
 
-type OptionalProps<T> = Partial<Record<keyof T, undefined>>;
+type OptionalProps<T extends Record<string, any>> = Partial<
+  Record<keyof T, undefined>
+>;
 
 type InputProps = RequiredProps<{
   value: string;
