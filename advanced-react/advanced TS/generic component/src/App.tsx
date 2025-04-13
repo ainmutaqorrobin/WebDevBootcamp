@@ -9,19 +9,23 @@ export const ProductList = <T,>(props: ProductListProps<T>) => {
   return <ul>{props.rows.map((row) => props.renderRow(row))}</ul>;
 };
 
-const products = [
-  {
-    id: 1,
-    title: "product",
-  },
-];
+interface Product {
+  id: number;
+  title: string;
+}
 
 function App() {
   return (
     <div>
-      <ProductList rows={products} renderRow={(row) => <li>{row.title}</li>} />
-      <ProductList
-        rows={products}
+      <ProductList<Product>
+        rows={[12, "test", 5]} //will produce an error since we passing type to Component
+        renderRow={(row) => <li>{row.title}</li>}
+      />
+      <ProductList<Product>
+        rows={[
+          { id: 1, title: "test" },
+          { id: 2, title: 123123 }, //will produce an error since Product.title is string value
+        ]}
         renderRow={(row) => {
           return <li>{row.title}</li>;
         }}
