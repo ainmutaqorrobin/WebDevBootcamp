@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
 
-interface ProductListProps {
-  rows: any[];
-  renderRow: (row: any) => ReactNode;
+interface ProductListProps<T> {
+  rows: T[];
+  renderRow: (row: T) => ReactNode;
 }
 
-export const ProductList = (props: ProductListProps) => {
+export const ProductList = <T,>(props: ProductListProps<T>) => {
   return <ul>{props.rows.map((row) => props.renderRow(row))}</ul>;
 };
 
@@ -23,7 +23,7 @@ function App() {
       <ProductList
         rows={products}
         renderRow={(row) => {
-          return <li>{row.nonExistingProp}</li>;
+          return <li>{row.title}</li>;
         }}
       ></ProductList>
     </div>
