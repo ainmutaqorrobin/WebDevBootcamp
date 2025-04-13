@@ -9,6 +9,6 @@ export type PopupProps = { isOpen: boolean } & (
 
 export type AllowedVariants = "with-controls" | "no-controls";
 
-export const Popup = <T extends AllowedVariants>(props: PopupProps) => {
+export const Popup = (props: PopupProps) => {
   return <></>;
 };
