@@ -1,12 +1,12 @@
 import "./App.css";
-import DisplayMouseMove from "./components/hoc/display-mouse";
-import withMouseMove from "./components/hoc/withMouseMove";
-import MousePosition from "./components/position";
+import DisplayMousePosition from "./components/render-props/display-mouse";
+import RenderMousePosition from "./components/render-props/render-mouse";
 function App() {
-  const Wrapper = withMouseMove(DisplayMouseMove);
   return (
     <div className="container">
-      <Wrapper />
+      <RenderMousePosition>
+        {({ x, y }) => <DisplayMousePosition x={x} y={y} />}
+      </RenderMousePosition>
     </div>
   );
 }
