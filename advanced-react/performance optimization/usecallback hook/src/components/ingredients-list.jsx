@@ -1,3 +1,4 @@
+import { memo } from "react";
 import styled from "styled-components";
 
 const StyledContainer = styled.div`
@@ -42,4 +43,4 @@ const IngredientsList = (props) => {
   );
 };
 
-export default IngredientsList;
+export default memo(IngredientsList);
