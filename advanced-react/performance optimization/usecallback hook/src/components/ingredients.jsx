@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { nanoid } from "nanoid";
 import styled from "styled-components";
 import IngredientsList from "./ingredients-list";
@@ -68,15 +68,15 @@ const Ingredients = (props) => {
     setIngredients((ingredients) => ingredients.filter((ing) => ing.id !== id));
   }, []);
 
-  const createIngredientsHeaderText = () => {
+  const createIngredientsHeaderText = useMemo(() => {
     console.log("createIngredientsHeaderText called");
     return <StyledHeading2>Ingredients ({ingredients.length})</StyledHeading2>;
-  };
+  }, [ingredients]);
 
   return (
     <StyledContainer>
       <div>
-        {createIngredientsHeaderText()}
+        {createIngredientsHeaderText}
         <IngredientsInfoHelper />
       </div>
 
