@@ -49,7 +49,7 @@ const initialIngredients = [
   },
 ];
 
-const Ingredients = (props) => {
+const Ingredients = ({ ingredientsInfoHelper }) => {
   console.log("Ingredient rendered");
   const [ingredients, setIngredients] = useState(initialIngredients);
 
@@ -76,7 +76,7 @@ const Ingredients = (props) => {
     <StyledContainer>
       <div>
         {createIngredientsHeaderText}
-        <IngredientsInfoHelper />
+        {ingredientsInfoHelper}
       </div>
 
       <StyledSpaceY4>

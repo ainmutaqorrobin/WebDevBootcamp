@@ -9,7 +9,7 @@ const StyledButton = styled.button`
   cursor: pointer;
 `;
 
-const IngredientsInfoHelper = (props) => {
+const IngredientsInfoHelper = () => {
   console.log("IngredientsInfoHelper rendered");
   return <StyledButton>📙</StyledButton>;
 };
