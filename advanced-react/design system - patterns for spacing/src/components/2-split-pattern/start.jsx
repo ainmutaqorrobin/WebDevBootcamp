@@ -14,14 +14,14 @@ const fractions = {
 
 export const Split = styled.div`
   display: grid;
-  gap: ${(props) => spaceSchema[props.gutter] ?? spaceSchema.l};
+  gap: ${({ gutter }) => spaceSchema[gutter] ?? spaceSchema.l};
   grid-template-columns: ${({ fraction }) =>
     fractions[fraction] ?? fractions["1/2"]};
 `;
 
 const InfoForm = () => {
   return (
-    <div>
+    <Split gutter="xs" fraction="2/3">
       <div>
         <h3>General Information</h3>
         <span>
@@ -30,7 +30,7 @@ const InfoForm = () => {
         </span>
       </div>
       <Form />
-    </div>
+    </Split>
   );
 };
 
