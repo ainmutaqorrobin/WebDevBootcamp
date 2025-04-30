@@ -8,7 +8,7 @@ const justifySchema = {
   center: "center",
 };
 
-const InlineBundle = styled.div`
+export const InlineBundle = styled.div`
   --gutter: ${({ gutter }) => spaceSchema[gutter] ?? spaceSchema.l};
   --justify: ${({ justify }) => justifySchema[justify] ?? justifySchema.start};
   --align: ${({ align }) => justifySchema[align] ?? justifySchema.start};
