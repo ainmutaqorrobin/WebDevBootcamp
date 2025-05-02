@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Card from "./card";
 import { spaceSchema } from "../common/spaces";
 
-const Grid = styled.div`
+export const Grid = styled.div`
   display: grid;
   gap: ${({ gutter }) => spaceSchema[gutter] ?? spaceSchema.l};
 
