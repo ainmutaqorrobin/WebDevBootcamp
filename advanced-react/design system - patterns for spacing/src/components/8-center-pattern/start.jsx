@@ -1,8 +1,29 @@
+import styled from "styled-components";
 import { Extras } from "./components";
+import { Layers } from "../1-layers-pattern/start";
+
+export const Center = styled.div`
+  box-sizing: content-box;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+
+  max-inline-size: ${({ maxWidth }) => maxWidth};
+
+  ${({ centerText }) => centerText && `text-align:center`}
+
+  ${({ centerChildren }) =>
+    centerChildren &&
+    `
+    display:flex;
+    flex-direction:column;
+    align-items:center
+    
+  `}
+`;
 
 const Profile = () => {
   return (
-    <div>
+    <Center as={Layers} gutter="xs" maxWidth="60ch" centerText centerChildren>
       <h2>I am title!</h2>
       <p>
         "This is a long long text , nibh lorem convenire quo et. Usu ea libris
@@ -10,7 +31,7 @@ const Profile = () => {
         end of text."
       </p>
       <Extras />
-    </div>
+    </Center>
   );
 };
 
