@@ -1,9 +1,9 @@
-import InfoForm from "./components/2-split-pattern/start.jsx";
+import NewProductsList from "./components/9-media-werapper-pattern/start";
 
 function App() {
   return (
     <>
-      <InfoForm />
+      <NewProductsList />
     </>
   );
 }
