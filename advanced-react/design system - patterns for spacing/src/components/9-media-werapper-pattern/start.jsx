@@ -1,11 +1,48 @@
 import tshirt from "../../images/tshirt.jpg";
 import { Description } from "./components";
 import { Grid } from "../4-grid-pattern/start";
+import styled from "styled-components";
+
+export const MediaWrapper = styled.div`
+  position: relative;
+
+  --n: ${({ ratio }) => (ratio ? ratio[0] : 1)};
+  --d: ${({ ratio }) => (ratio ? ratio[1] : 1)};
+
+  aspect-ratio: var(--n) / var(--d);
+  @supports not (aspect-ratio: 1/1) {
+    padding-bottom: calc(var(--d) / var(--n) * 100%);
+  }
+
+  > * {
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  > img,
+  > video {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+  }
+`;
 
 const NewProducts = () => {
   return (
     <div>
-      <img src={tshirt} alt="" />
+      <MediaWrapper>
+        <img src={tshirt} alt="" />
+      </MediaWrapper>
       <Description>White T-shirt - $19.99</Description>
     </div>
   );
