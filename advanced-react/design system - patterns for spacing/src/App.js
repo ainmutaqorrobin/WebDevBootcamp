@@ -1,9 +1,9 @@
-import NewProductsList from "./components/9-media-werapper-pattern/start";
+import HeroPage from "./components/10-cover-pattern/start";
 
 function App() {
   return (
     <>
-      <NewProductsList />
+      <HeroPage />
     </>
   );
 }
