@@ -1,9 +1,9 @@
-import HeroPage from "./components/10-cover-pattern/start";
+import Modal from "./components/12-modal-project/register-modal";
 
 function App() {
   return (
     <>
-      <HeroPage />
+      <Modal />
     </>
   );
 }
