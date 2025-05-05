@@ -8,11 +8,11 @@ function App() {
     <div>
       {changeShirts ? (
         <>
-          <span>Shirts counts: </span> <Counter />{" "}
+          <span>Shirts counts: </span> <Counter key="shirt" />{" "}
         </>
       ) : (
         <>
-          <span>Shoes counts: </span> <Counter />{" "}
+          <span>Shoes counts: </span> <Counter key="shoe" />{" "}
         </>
       )}
       <br />
