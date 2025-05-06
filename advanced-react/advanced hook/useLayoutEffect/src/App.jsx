@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useLayoutEffect } from "react";
 import "./App.css";
 
 function App() {
@@ -6,16 +6,16 @@ function App() {
   const [top, setTop] = useState(0);
   const buttonRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (buttonRef.current === null || !show) return setTop(0);
     const { bottom } = buttonRef.current.getBoundingClientRect();
     setTop(bottom + 30);
   }, [show]);
 
-  // const now = performance.now();
-  // while (now > performance.now() - 100) {
-  //   //Do something
-  // }
+  const now = performance.now();
+  while (now > performance.now() - 100) {
+    //Do something
+  }
 
   return (
     <>
