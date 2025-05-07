@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import Cover from "./components/cover";
 import Reviews from "./components/reviews";
 import Writer from "./components/writer";
@@ -6,10 +6,14 @@ import { StyledButton } from "./components/styled-elements";
 
 function App() {
   const [section, setSection] = useState("Cover");
+  const [isPending, startTransition] = useTransition();
 
   const sectionHandler = (sec) => {
-    setSection(sec);
+    startTransition(() => {
+      setSection(sec);
+    });
   };
+
   return (
     <>
       <StyledButton onClick={() => sectionHandler("Cover")}>
@@ -21,6 +25,7 @@ function App() {
       <StyledButton onClick={() => sectionHandler("Writer")}>
         Book's Writer
       </StyledButton>
+      {isPending && "Loading..."}
 
       {section === "Cover" ? (
         <Cover />
