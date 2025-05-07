@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 
 function App() {
   const [showInput, setShowInput] = useState(false);
-  const inputRef = useRef(null);
-
-  useEffect(() => {
-    inputRef.current.focus();
+  const inputRef = useCallback((input) => {
+    if (input === null) return;
+    input.focus();
   }, []);
+
   return (
     <>
       <button onClick={() => setShowInput(!showInput)}>Switch</button>
