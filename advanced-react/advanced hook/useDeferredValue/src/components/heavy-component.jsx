@@ -1,4 +1,6 @@
-const HeavyComponent = ({ keyword }) => {
+import { memo } from "react";
+
+const Component = ({ keyword }) => {
   const init = performance.now();
   while (init > performance.now() - 100) {
     //Slowing down the component on purpose.
@@ -11,4 +13,4 @@ const HeavyComponent = ({ keyword }) => {
   );
 };
 
-export default HeavyComponent;
+export const HeavyComponent = memo(Component);
