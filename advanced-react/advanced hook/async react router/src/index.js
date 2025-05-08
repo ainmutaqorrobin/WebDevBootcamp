@@ -1,10 +1,11 @@
-import React from "react";
+import React, { lazy } from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Nav from "./components/nav";
 import { mainRoute } from "./components/main";
 import { booksRoute } from "./components/books";
-import Club from "./components/club";
+
+const Club = lazy(() => import("./components/club"));
 
 const router = createBrowserRouter([
   {

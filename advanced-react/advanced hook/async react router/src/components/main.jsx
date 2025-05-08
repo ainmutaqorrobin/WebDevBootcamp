@@ -1,19 +1,21 @@
-import { useLoaderData } from "react-router";
-import delay from "../util/delay";
+import { Await, useLoaderData } from "react-router";
 import { MainContainer, MainHeading } from "./styled-elements";
+import { Suspense } from "react";
+import { mainLoader } from "./main-loader";
 
-const Main = () => {
-  const data = useLoaderData();
+const MainComponent = () => {
+  const { promise } = useLoaderData();
 
   return (
     <MainContainer>
-      <MainHeading>Main - {data}</MainHeading>
+      <MainHeading>
+        Main - {""}
+        <Suspense fallback="fetching...">
+          <Await resolve={promise}>{(data) => <strong>{data}</strong>}</Await>
+        </Suspense>
+      </MainHeading>
     </MainContainer>
   );
 };
 
-async function loader() {
-  return await delay("Fetched Data", 1000);
-}
-
-export const mainRoute = { element: <Main />, loader };
+export const mainRoute = { element: <MainComponent />, loader: mainLoader };
