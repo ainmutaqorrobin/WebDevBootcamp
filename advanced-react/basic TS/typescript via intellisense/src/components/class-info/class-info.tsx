@@ -1,6 +1,7 @@
 import "./style.css";
 
-const ClassInfo = () => {
+type ClassInfoProps = { name: string };
+const ClassInfo = ({ name }: ClassInfoProps) => {
   return (
     <section className="custom-info">
       <header className="custom-info-header">
