@@ -4,7 +4,7 @@ import "./App.css";
 function App() {
   return (
     <main className="app">
-      <ClassInfo name="Roy" />
+      <ClassInfo name="Roy" course="Advanced React" />
     </main>
   );
 }

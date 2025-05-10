@@ -1,6 +1,11 @@
 import { ChangeEventHandler } from "react";
 
-const Dashboard = ({ inputName, handleChange }) => {
+type DashboardProps = {
+  inputName: string;
+  handleChange: ChangeEventHandler<HTMLInputElement>;
+};
+
+const Dashboard = ({ inputName, handleChange }: DashboardProps) => {
   return (
     <form
       className="flex flex-col gap-4 bg-primary-10 text-white"
@@ -18,11 +23,6 @@ const Dashboard = ({ inputName, handleChange }) => {
       </div>
     </form>
   );
-};
-
-Dashboard.propTypes = {
-  inputName: PropTypes.string,
-  handleChange: PropTypes.func,
 };
 
 export default Dashboard;
