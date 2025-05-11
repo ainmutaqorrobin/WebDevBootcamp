@@ -1,10 +1,11 @@
+import { PropsWithChildren } from "react";
 import "./style.css";
 
-type CardProps = { children: any /* Get rid of any */ };
+type CardProps = { color?: "crimson" | "blue" | "brown" };
 
-const Card = ({ children }: CardProps) => {
+const Card = ({ children, color = "blue" }: PropsWithChildren<CardProps>) => {
   return (
-    <section className="m-4 card-container">
+    <section className="m-4 card-container" style={{ color }}>
       {children}
     </section>
   );
