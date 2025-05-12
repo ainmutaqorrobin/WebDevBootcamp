@@ -1,7 +1,9 @@
-type AlertProps = {
-  variant: "no-code" | "with-code";
-  code?: string;
-};
+type AlertProps =
+  | {
+      variant: "with-code";
+      code: string;
+    }
+  | { variant: "no-code" };
 
 const Alert = (props: AlertProps) => {
   if (props.variant === "no-code") {
