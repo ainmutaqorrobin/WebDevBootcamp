@@ -1,4 +1,4 @@
-type AlertProps =
+type AlertVariantProps =
   | {
       variant: "no-code";
     }
@@ -6,6 +6,8 @@ type AlertProps =
       variant: "with-code";
       code: string;
     };
+
+type AlertProps = { btnColor: string } & AlertVariantProps;
 
 const Alert = (props: AlertProps) => {
   if (props.variant === "no-code") {

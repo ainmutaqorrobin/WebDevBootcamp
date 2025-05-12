@@ -3,11 +3,11 @@ import Alert from "./components/alert";
 function App() {
   return (
     <div>
-      <Alert variant="with-code" code="101" />
-      <Alert variant="no-code" />
+      <Alert variant="with-code" code="101" btnColor="" />
+      <Alert variant="no-code" btnColor="" />
 
       {/* The following should show an error */}
-      <Alert variant="no-code" code="500" />
+      <Alert variant="no-code" btnColor="" />
     </div>
   );
 }
