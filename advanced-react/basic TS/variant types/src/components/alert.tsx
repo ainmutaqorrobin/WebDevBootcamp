@@ -1,15 +1,39 @@
 type AlertProps =
   | {
+      variant: "no-code";
+    }
+  | {
       variant: "with-code";
       code: string;
-    }
-  | { variant: "no-code" };
+    };
 
 const Alert = (props: AlertProps) => {
   if (props.variant === "no-code") {
-    return <div>No code </div>;
+    return (
+      <div>
+        <h3>No Code</h3>
+        <button
+          style={{
+            backgroundColor: props.btnColor,
+          }}
+        >
+          Click me!
+        </button>
+      </div>
+    );
   } else {
-    return <div>Alert Code: {props.code}</div>;
+    return (
+      <div>
+        <span>Code: {props.code}</span>
+        <button
+          style={{
+            backgroundColor: props.btnColor,
+          }}
+        >
+          Click me!
+        </button>
+      </div>
+    );
   }
 };
 
