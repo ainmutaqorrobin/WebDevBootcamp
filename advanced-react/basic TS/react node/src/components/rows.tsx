@@ -1,7 +1,7 @@
 import React from "react";
 
 interface RowsProps {
-  renderRow: React.ReactNode;
+  renderRow: React.FC<number>;
 }
 
 const Rows = (props: RowsProps) => {
