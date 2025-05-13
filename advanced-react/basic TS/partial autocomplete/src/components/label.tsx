@@ -6,7 +6,7 @@ const spaces = {
 
 type Space = keyof typeof spaces;
 
-type SpaceType = Space | string;
+type SpaceType = Partial<Space>;
 
 const Label = (props: { space: SpaceType }) => {
   return (
