@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import { useImmerReducer } from "use-immer";
 import ShoppingListHeader from "./shopping-list-header";
 import ShoppingListRow from "./shopping-list-row";
 import styled from "styled-components";
@@ -62,38 +62,25 @@ const shoppingItems = {
 const reducer = (state, action) => {
   switch (action.type) {
     case "UPDATE_NEW_SHOPPING_ITEM_NAME":
-      return {
-        ...state,
-        newShoppingItemName: action.payload,
-      };
+      state.newShoppingItemName = action.payload;
+      break;
     case "ADD_ITEM":
-      return {
-        ...state,
-        newShoppingItemName: "",
-        items: [...state.items, action.payload],
-      };
+      state.newShoppingItemName = "";
+      state.items.push(action.payload);
+      break;
     case "UPDATE_ITEM":
-      return {
-        ...state,
-        items: state.items.map((item, idx) => {
-          if (idx === action.payload.index) {
-            return action.payload.item;
-          }
-          return item;
-        }),
-      };
+      state.items.splice(action.payload.index, 1, action.payload.item);
+      break;
     case "DELETE_ITEM":
-      return {
-        ...state,
-        items: state.items.filter((_, idx) => idx !== action.payload.index),
-      };
+      state.items.splice(action.payload.index, 1);
+      break;
     default:
       return state;
   }
 };
 
 const ShoppingList = (props) => {
-  const [shoppingList, dispatch] = useReducer(reducer, shoppingItems);
+  const [shoppingList, dispatch] = useImmerReducer(reducer, shoppingItems);
   const addItem = () => {
     if (!shoppingList.newShoppingItemName) return;
     dispatch({
