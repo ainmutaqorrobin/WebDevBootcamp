@@ -5,7 +5,7 @@ const classNames = {
 };
 
 type ButtonProps = {
-  variant: "primary" | "secondary" | "tertiary";
+  variant: keyof typeof classNames;
 };
 
 export const Button = (props: ButtonProps) => {
