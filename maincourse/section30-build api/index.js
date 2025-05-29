@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 
 const app = express();
+app.use(express.json());
 const port = 3000;
 const masterKey = "4VGP2DN-6EWM4SJ-N6FGRHV-Z3PR3TT";
 
@@ -25,15 +26,14 @@ app.get("/joke/:id", (req, res) => {
   const { id } = req.params;
   const jokeId = +id;
 
-  const getJoke = jokes.find((joke) => joke.id === jokeId);
-
   if (!jokeId) {
     return res.json({ message: "Please provide id", status: 404 });
   }
 
-  if (jokeId < 1 || jokeId > 100) {
-    return res.json({
-      message: "There's no joke in the provide id",
+  const getJoke = jokes.find((joke) => joke.id === jokeId);
+  if (!getJoke) {
+    return res.status(404).json({
+      message: `No joke found with ID ${jokeId}`,
       status: 404,
     });
   }
@@ -41,9 +41,40 @@ app.get("/joke/:id", (req, res) => {
 });
 
 //3. GET a jokes by filtering on the joke type
+app.get("/jokeType/:type", (req, res) => {
+  const { type } = req.params;
+  if (!type) {
+    return res.json({ status: 404, message: "Please provide joke type" });
+  }
 
+  const selectedJokes = jokes.filter((joke) => joke.jokeType === type);
+  if (selectedJokes.length === 0) {
+    return res.json({
+      status: 400,
+      message: "There are no jokes based on provide type",
+    });
+  }
+  return res.json({ status: 200, message: "success", jokes: selectedJokes });
+});
 //4. POST a new joke
+app.post("/joke", (req, res) => {
+  const { jokeText, jokeType } = req.body;
+  if (!jokeText || !jokeType) {
+    return res.json({
+      status: 400,
+      message: "Please provide both joke text and joke type",
+    });
+  }
 
+  const newJoke = {
+    id: jokes.length + 1,
+    jokeText,
+    jokeType,
+  };
+
+  jokes.push(newJoke);
+  return res.json({ status: 201, message: "new joke added", jokes });
+});
 //5. PUT a joke
 
 //6. PATCH a joke
