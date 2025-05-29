@@ -5,11 +5,40 @@ const app = express();
 const port = 3000;
 const masterKey = "4VGP2DN-6EWM4SJ-N6FGRHV-Z3PR3TT";
 
+function getRandomNumber(max) {
+  return Math.floor(Math.random() * max);
+}
+
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //1. GET a random joke
+app.get("/random", (req, res) => {
+  return res.json({
+    message: "success",
+    status: 200,
+    joke: jokes[getRandomNumber(100)],
+  });
+});
 
 //2. GET a specific joke
+app.get("/joke/:id", (req, res) => {
+  const { id } = req.params;
+  const jokeId = +id;
+
+  const getJoke = jokes.find((joke) => joke.id === jokeId);
+
+  if (!jokeId) {
+    return res.json({ message: "Please provide id", status: 404 });
+  }
+
+  if (jokeId < 1 || jokeId > 100) {
+    return res.json({
+      message: "There's no joke in the provide id",
+      status: 404,
+    });
+  }
+  return res.json({ message: "success", status: 200, joke: getJoke });
+});
 
 //3. GET a jokes by filtering on the joke type
 
