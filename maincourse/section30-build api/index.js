@@ -8,7 +8,7 @@ app.use(express.json());
 const port = 3000;
 const masterKey = "4VGP2DN-6EWM4SJ-N6FGRHV-Z3PR3TT";
 
-function getRandomNumber(max) {
+function getRandomNumber(max = jokes.length) {
   return Math.floor(Math.random() * max);
 }
 
@@ -52,7 +52,7 @@ app.get("/random", (req, res) => {
   return res.json({
     message: "success",
     status: 200,
-    joke: jokes[getRandomNumber(100)],
+    joke: jokes[getRandomNumber()],
   });
 });
 
@@ -182,6 +182,13 @@ app.delete("/joke/:id", (req, res) => {
 
 //8. DELETE All jokes
 app.delete("/allJoke", (req, res) => {
+  const userKey = req.query.key;
+
+  if (!userKey)
+    return res
+      .status(404)
+      .json({ message: "You are not authorised to  perform this action" });
+
   jokes.length = 0;
 
   return res.status(200).json({ message: "all jokes deleted", jokes });
