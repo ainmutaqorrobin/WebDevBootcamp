@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import PG from "pg";
 import { CreateUser } from "./util/createuser.js";
+import { CheckUser } from "./util/checkuser.js";
 
 const app = express();
 const port = 3000;
@@ -51,6 +52,13 @@ app.post("/login", async (req, res) => {
   if (!email || !password) {
     return res.status(400).json({ message: "Please enter email and password" });
   }
+
+  const user = await CheckUser(email, db);
+  if (user.password !== password)
+    return res.status(400).json({ message: "Wrong password" });
+  if (user) return res.render("secrets.ejs");
+
+  return res.status(400).json({ message: "This user is not registered" });
 });
 
 app.listen(port, () => {
