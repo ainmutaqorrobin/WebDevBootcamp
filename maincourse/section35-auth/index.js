@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import PG from "pg";
 import { CreateUser } from "./util/createuser.js";
 import { CheckUser } from "./util/checkuser.js";
+import { HashPassword, VerifyPassword } from "./util/encryption.js";
 
 const app = express();
 const port = 3000;
@@ -37,8 +38,9 @@ app.post("/register", async (req, res) => {
     return res.status(400).json({ message: "Please enter email and password" });
   }
 
+  const hashedPassword = await HashPassword(password);
   try {
-    const result = await CreateUser(email, password, db);
+    const result = await CreateUser(email, hashedPassword, db);
     if (result) {
       return res.render("secrets.ejs");
     }
@@ -54,8 +56,9 @@ app.post("/login", async (req, res) => {
   }
 
   const user = await CheckUser(email, db);
-  if (user.password !== password)
-    return res.status(400).json({ message: "Wrong password" });
+  const verifyResult = await VerifyPassword(password, user.password);
+
+  if (!verifyResult) return res.status(400).json({ message: "Wrong password" });
   if (user) return res.render("secrets.ejs");
 
   return res.status(400).json({ message: "This user is not registered" });
