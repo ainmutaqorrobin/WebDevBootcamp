@@ -7,16 +7,18 @@ import { HashPassword, VerifyPassword } from "./util/encryption.js";
 import session from "express-session";
 import passport from "passport";
 import { Strategy } from "passport-local";
+import environment from "dotenv";
 
 const app = express();
 const port = 3000;
+environment.config();
 
 const db = new PG.Client({
-  user: "postgres",
-  host: "localhost",
-  database: "secrets",
-  password: "123",
-  port: 5432,
+  user: process.env.PG_USER,
+  host: process.env.PG_HOST,
+  database: process.env.PG_NAME,
+  password: process.env.PG_PASSWORD,
+  port: process.env.PG_PORT,
 });
 db.connect();
 
@@ -26,7 +28,7 @@ app.use(express.static("public"));
 // session middleware to handle user session in Express
 app.use(
   session({
-    secret: "roysegak", // secret key to sign session ID cookie (protect against tampering)
+    secret: process.env.SESSION_SECRET, // secret key to sign session ID cookie (protect against tampering)
     resave: false, // don't save session again if nothing has changed
     saveUninitialized: true, // save new sessions (even if not modified) - can be useful for login tracking
     cookie: { maxAge: 1000 * 60 * 60 * 24 }, // session cookie expires in 24 hours
