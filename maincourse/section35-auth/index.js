@@ -8,6 +8,7 @@ import session from "express-session";
 import passport from "passport";
 import { Strategy } from "passport-local";
 import environment from "dotenv";
+import GoogleStrategy from "passport-google-oauth2";
 
 const app = express();
 const port = 3000;
@@ -60,6 +61,13 @@ app.get("/secrets", (req, res) => {
   res.render("secrets.ejs"); // if authenticated, render the secrets page
 });
 
+app.get(
+  "/auth/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+  })
+);
+
 // register route: handle form submission to create new user
 app.post("/register", async (req, res) => {
   const { username: email, password } = req.body;
@@ -92,6 +100,7 @@ app.post(
 
 // register the "local" strategy with passport
 passport.use(
+  "local",
   new Strategy(async function verify(username, password, cb) {
     const email = username;
     try {
@@ -103,6 +112,21 @@ passport.use(
       return cb(error); // DB error or unexpected issue
     }
   })
+);
+
+passport.use(
+  "google",
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "http://localhost:3000/auth/google.secrets",
+      userProfileURL: "https://wwww.googleapis.com/oauth2/v3/userinfo",
+    },
+    async (accessToken, refreshToken, profile, cb) => {
+      console.log(profile);
+    }
+  )
 );
 
 // serializeUser is called after successful login (req.login or passport.authenticate)
