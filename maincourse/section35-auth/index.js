@@ -61,10 +61,20 @@ app.get("/secrets", (req, res) => {
   res.render("secrets.ejs"); // if authenticated, render the secrets page
 });
 
+// When user visits /auth/google, they will be redirected to Google's consent screen to log in.
 app.get(
   "/auth/google",
   passport.authenticate("google", {
-    scope: ["profile", "email"],
+    scope: ["profile", "email"], // Request access to user's profile and email from Google
+  })
+);
+
+// It tries to authenticate the user again (with the token) and then redirects based on success/failure.
+app.get(
+  "/auth/google/secrets",
+  passport.authenticate("google", {
+    successRedirect: "/secrets", // If login successful, redirect to /secrets page
+    failureRedirect: "/login", // If login fails, redirect to /login page
   })
 );
 
@@ -115,16 +125,32 @@ passport.use(
 );
 
 passport.use(
-  "google",
+  "google", // Strategy name
   new GoogleStrategy(
     {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/google.secrets",
-      userProfileURL: "https://wwww.googleapis.com/oauth2/v3/userinfo",
+      clientID: process.env.GOOGLE_CLIENT_ID, // Google OAuth client ID from .env
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET, // Client secret from .env
+      callbackURL: "http://localhost:3000/auth/google/secrets", // Must match redirect URI in Google Developer Console
+      userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo", // URL to fetch user profile info
     },
+    // This function runs after successful authentication with Google
     async (accessToken, refreshToken, profile, cb) => {
-      console.log(profile);
+      console.log(profile); // Log the user's Google profile
+
+      try {
+        // Check if user already exists in your DB using their email
+        const user = await CheckUser(profile.email, db);
+
+        if (!user) {
+          // If not found, create a new user with Google email
+          const newUser = await CreateUser(profile.email, "google.com", db);
+          cb(null, newUser); // Proceed with newly created user
+        } else {
+          cb(null, user); // Proceed with existing user
+        }
+      } catch (error) {
+        cb(error); // Handle any errors during DB operation
+      }
     }
   )
 );
