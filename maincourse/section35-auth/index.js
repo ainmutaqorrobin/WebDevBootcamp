@@ -46,6 +46,13 @@ app.get("/", (req, res) => {
   res.render("home.ejs");
 });
 
+app.get("/logout", (req, res) => {
+  req.logout((error) => {
+    if (error) console.log(err);
+    res.redirect("/");
+  });
+});
+
 app.get("/login", (req, res) => {
   res.render("login.ejs");
 });
