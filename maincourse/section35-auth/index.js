@@ -9,6 +9,8 @@ import passport from "passport";
 import { Strategy } from "passport-local";
 import environment from "dotenv";
 import GoogleStrategy from "passport-google-oauth2";
+import { AddSecret } from "./util/addsecret.js";
+import { GetSecret } from "./util/getsecret.js";
 
 const app = express();
 const port = 3000;
@@ -62,10 +64,21 @@ app.get("/register", (req, res) => {
 });
 
 // protected route: only accessible if the user is authenticated (i.e. logged in)
-app.get("/secrets", (req, res) => {
+app.get("/secrets", async (req, res) => {
   if (!req.isAuthenticated()) return res.redirect("/login"); // redirect to login if not authenticated
 
-  res.render("secrets.ejs"); // if authenticated, render the secrets page
+  try {
+    const result = await GetSecret(req.user.email, db);
+    console.log(result);
+    if (result.secret) {
+      return res.render("secrets.ejs", { secret: result.secret });
+    }
+    return res.render("secrets.ejs", {
+      secret: "You should submit a secret!",
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // When user visits /auth/google, they will be redirected to Google's consent screen to log in.
@@ -84,6 +97,26 @@ app.get(
     failureRedirect: "/login", // If login fails, redirect to /login page
   })
 );
+
+app.get("/submit", (req, res) => {
+  if (!req.isAuthenticated()) return res.redirect("/login");
+  return res.render("submit.ejs");
+});
+
+app.post("/submit", async (req, res) => {
+  const { secret } = req.body;
+
+  if (!secret) {
+    return res.status(400).json({ message: "Please add secrets" });
+  }
+
+  try {
+    await AddSecret(secret, req.user.email, db);
+    res.redirect("/secrets");
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 // register route: handle form submission to create new user
 app.post("/register", async (req, res) => {
