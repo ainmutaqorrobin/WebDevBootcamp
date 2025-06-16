@@ -1,29 +1,22 @@
 import express from "express";
 import bodyParser from "body-parser";
-import PG from "pg";
-import { CreateUser } from "./util/createuser.js";
-import { CheckUser } from "./util/checkuser.js";
+import "./db.js";
 import { HashPassword, VerifyPassword } from "./util/encryption.js";
 import session from "express-session";
 import passport from "passport";
 import { Strategy } from "passport-local";
 import environment from "dotenv";
 import GoogleStrategy from "passport-google-oauth2";
-import { AddSecret } from "./util/addsecret.js";
-import { GetSecret } from "./util/getsecret.js";
+import {
+  AddSecret,
+  CheckUser,
+  CreateUser,
+  GetSecret,
+} from "./util/userService.js";
 
 const app = express();
 const port = 3000;
 environment.config();
-
-const db = new PG.Client({
-  user: process.env.PG_USER,
-  host: process.env.PG_HOST,
-  database: process.env.PG_NAME,
-  password: process.env.PG_PASSWORD,
-  port: process.env.PG_PORT,
-});
-db.connect();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -68,7 +61,7 @@ app.get("/secrets", async (req, res) => {
   if (!req.isAuthenticated()) return res.redirect("/login"); // redirect to login if not authenticated
 
   try {
-    const result = await GetSecret(req.user.email, db);
+    const result = await GetSecret(req.user.email);
     console.log(result);
     if (result.secret) {
       return res.render("secrets.ejs", { secret: result.secret });
@@ -111,7 +104,7 @@ app.post("/submit", async (req, res) => {
   }
 
   try {
-    await AddSecret(secret, req.user.email, db);
+    await AddSecret(secret, req.user.email);
     res.redirect("/secrets");
   } catch (error) {
     console.log(error);
@@ -130,7 +123,7 @@ app.post("/register", async (req, res) => {
   // hash password before saving
   const hashedPassword = await HashPassword(password);
   try {
-    const user = await CreateUser(email, hashedPassword, db); // save user to DB
+    const user = await CreateUser(email, hashedPassword); // save user to DB
     if (user) {
       req.login(user, (err) => res.redirect("/secrets")); // login also triggers serializeUser
     }
@@ -154,7 +147,7 @@ passport.use(
   new Strategy(async function verify(username, password, cb) {
     const email = username;
     try {
-      const user = await CheckUser(email, db); // check if user exists
+      const user = await CheckUser(email); // check if user exists
       const verifyResult = await VerifyPassword(password, user.password); // verify password
       if (!verifyResult) return cb(null, false); // password doesn't match
       if (verifyResult) return cb(null, user); // success - pass user to passport
@@ -179,11 +172,11 @@ passport.use(
 
       try {
         // Check if user already exists in your DB using their email
-        const user = await CheckUser(profile.email, db);
+        const user = await CheckUser(profile.email);
 
         if (!user) {
           // If not found, create a new user with Google email
-          const newUser = await CreateUser(profile.email, "google.com", db);
+          const newUser = await CreateUser(profile.email, "google.com");
           cb(null, newUser); // Proceed with newly created user
         } else {
           cb(null, user); // Proceed with existing user
