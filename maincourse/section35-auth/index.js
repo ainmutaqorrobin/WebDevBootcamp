@@ -18,6 +18,7 @@ const app = express();
 const port = 3000;
 environment.config();
 
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
@@ -56,13 +57,20 @@ app.get("/register", (req, res) => {
   res.render("register.ejs");
 });
 
+app.get("/me", (req, res) => {
+  if (req.isAuthenticated())
+    return res
+      .status(200)
+      .json({ message: "You are logged in", user: req.user });
+  return res.status(401).json({ message: "You are not login yet" });
+});
+
 // protected route: only accessible if the user is authenticated (i.e. logged in)
 app.get("/secrets", async (req, res) => {
   if (!req.isAuthenticated()) return res.redirect("/login"); // redirect to login if not authenticated
 
   try {
     const result = await GetSecret(req.user.email);
-    console.log(result);
     if (result.secret) {
       return res.render("secrets.ejs", { secret: result.secret });
     }
@@ -192,7 +200,12 @@ passport.use(
 // choose what to store in session (in this case, the whole user object)
 // only executes ONCE after login to create session
 passport.serializeUser((user, cb) => {
-  cb(null, user); // stored in session (you can also just store user.id for lighter session)
+  const { id, email, secret } = user;
+  cb(null, {
+    id,
+    email,
+    secret: secret || null,
+  }); // stored in session (you can also just store user.id for lighter session)
 });
 
 // deserializeUser is called on EVERY request after login
